@@ -1,0 +1,74 @@
+import streamlit as st
+import datetime
+import streamlit.components.v1 as components
+
+
+
+
+
+
+def calculate_performance_loss(base_time, temperature):
+    # Conversion du temps en minutes
+    total_minutes = base_time.hour * 60 + base_time.minute + base_time.second / 60.0
+    
+    # Calcul de la perte de performance pour températures élevées
+    if temperature > 13:
+        loss_percentage = (temperature - 13) * 0.15
+    # Ajout d'un calcul hypothétique pour les basses températures
+    elif temperature < 12:
+        loss_percentage = (12 - temperature) * 0.10  # Hypothèse: 0.10% par degré sous 12°C
+    else:
+        loss_percentage = 0
+    
+    time_loss_minutes = total_minutes * (loss_percentage / 100)
+    # Convertir le temps perdu en minutes et secondes entières
+    loss_minutes = int(time_loss_minutes)
+    loss_seconds = int((time_loss_minutes - loss_minutes) * 60)
+    
+    return loss_minutes, loss_seconds, total_minutes + time_loss_minutes
+
+
+def get_weather_emoji(temperature):
+    if temperature <= 0:
+        return "❄️"
+    elif temperature <= 13:
+        return "🌤"
+    elif temperature <= 25:
+        return "☀️"
+    else:
+        return "🔥"
+
+# Interface utilisateur
+st.title("Heat impact on the performance")
+st.write("Enter your expected race time and the temperature")
+
+# Saisie du temps de course
+hours = st.number_input("Hours", min_value=0, max_value=23, value=0, step=1)
+minutes = st.number_input("Minutes", min_value=0, max_value=59, value=0, step=1)
+seconds = st.number_input("Seconds", min_value=0, max_value=59, value=0, step=1)
+
+# Saisie de la température
+
+temperature = st.slider("Temperature (°C)", min_value=-20, max_value=40, value=13)
+
+# Conversion du temps de course en objet datetime.time
+base_time = datetime.time(hour=hours, minute=minutes, second=seconds)
+
+if st.button("Preview weather impact"):
+    loss_minutes, loss_seconds, total_time = calculate_performance_loss(base_time, temperature)
+    emoji = get_weather_emoji(temperature)
+    # Formatage du temps total en heures, minutes et secondes
+    total_hours = int(total_time // 60)
+    total_minutes = int(total_time % 60)
+    total_seconds = int((total_time * 60) % 60)
+    if temperature > 13:
+        st.write(f"Time lost due to heat: {loss_minutes}m{loss_seconds:02d}s")
+    elif temperature < 12:
+        st.write(f"Time lost due to cold: {loss_minutes}m{loss_seconds:02d}s")
+    else : 
+        st.write(f"Perfect temperature")
+
+
+    
+    st.write(f"Total race time : {total_hours}h{total_minutes}m{total_seconds}s")
+    st.write(f"Weather conditions : {emoji}")

@@ -5,8 +5,6 @@ import streamlit.components.v1 as components
 
 
 
-
-
 def calculate_performance_loss(base_time, temperature):
     # Conversion du temps en minutes
     total_minutes = base_time.hour * 60 + base_time.minute + base_time.second / 60.0
@@ -37,15 +35,51 @@ def get_weather_emoji(temperature):
         return "☀️"
     else:
         return "🔥"
+    
+
+
+
+
+
+
+
+
+
+
+
+st.image("logo_enduraw.png", width=100)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
+
+
+
+
 
 # Interface utilisateur
 st.title("Heat impact on the performance")
 st.write("Enter your expected race time and the temperature")
 
-# Saisie du temps de course
-hours = st.number_input("Hours", min_value=0, max_value=23, value=0, step=1)
-minutes = st.number_input("Minutes", min_value=0, max_value=59, value=0, step=1)
-seconds = st.number_input("Seconds", min_value=0, max_value=59, value=0, step=1)
+st.write("")
+st.markdown("The calculation are from this [scientific paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8677617/)")
+
+
+st.write("")
+st.write("")
+
+
+
+
+
+
+# Création de trois colonnes pour les heures, les minutes, et les secondes
+col1, col2, col3 = st.columns(3)
+
+# Utilisation de chaque colonne pour un champ spécifique
+with col1:hours = st.number_input("Hours", min_value=0, max_value=23, value=0, step=1)
+
+with col2:minutes = st.number_input("Minutes", min_value=0, max_value=59, value=0, step=1)
+
+with col3: seconds = st.number_input("Seconds", min_value=0, max_value=59, value=0, step=1)
+
+
 
 # Saisie de la température
 
@@ -72,3 +106,14 @@ if st.button("Preview weather impact"):
     
     st.write(f"Total race time : {total_hours}h{total_minutes}m{total_seconds}s")
     st.write(f"Weather conditions : {emoji}")
+
+
+
+
+
+
+st.write("")
+st.write("")
+
+st.markdown("Do you want this tool directly integrated to Strava ? [Check our integration](https://www.joseph-mestrallet.com/strava-integration)")
+

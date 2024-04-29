@@ -1,8 +1,5 @@
 import streamlit as st
-import folium
 from datetime import datetime, timedelta
-from streamlit_folium import folium_static
-import pytz
 import os
 import streamlit.components.v1 as components  # Importer le module components
 import json

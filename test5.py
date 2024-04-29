@@ -17,7 +17,7 @@ age = st.slider("Age", min_value=18, max_value=100, value=30)
 course = st.selectbox("Choose the race", ["Boston Marathon", "London Marathon","Ecotrail"])
 
 # Affichage du bouton pour soumettre
-if st.button("Show the course and informations"):
+if st.button("Show the course and informations about this race"):
     if not name:
         st.error("Please enter the runner's name.")
     else:

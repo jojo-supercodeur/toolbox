@@ -1,0 +1,214 @@
+import streamlit as st
+import folium
+from datetime import datetime, timedelta
+from streamlit_folium import folium_static
+import pytz
+import os
+import streamlit.components.v1 as components  # Importer le module components
+import json
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+
+
+base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
+
+
+
+
+
+
+
+
+
+# Fonction pour générer les prévisions de vent
+def get_wind_forecast():
+    return 15, "Nord-Est"  # Exemple de valeurs arbitraires
+
+def calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed):
+    # Calcul de l'angle entre la direction de la course et celle du vent
+    angle_difference = math.radians(wind_direction - course_direction)
+    
+    # Composante de la vitesse du vent dans la direction de la course
+    wind_component = wind_speed * math.cos(angle_difference)
+    
+    # Calcul du ratio de l'aide du vent par rapport à la vitesse du coureur
+    wind_assistance_ratio = wind_component / runner_speed
+    
+    return wind_assistance_ratio
+
+# Fonction pour charger et afficher le fichier HTML de la carte
+def load_html_map(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    return html_content
+
+def mean_angle_degrees(angles):
+    x = sum(math.cos(math.radians(angle)) for angle in angles) / len(angles)
+    y = sum(math.sin(math.radians(angle)) for angle in angles) / len(angles)
+    mean_angle = math.degrees(math.atan2(y, x))
+    return mean_angle if mean_angle >= 0 else mean_angle + 360
+
+def draw_wind_rose(direction):
+    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw={"projection": "polar"})
+    fig.patch.set_facecolor('none')
+
+
+
+    # Configurer l'axe radial
+    ax.set_theta_zero_location("N")
+    ax.set_theta_direction(-1)
+    ax.set_rticks([])
+    ax.set_yticklabels([])
+    ax.set_xticks(np.arange(0, 2.0 * np.pi, np.pi / 4))
+    ax.set_xticklabels(["N", "NE", "E", "SE", "S", "SW", "W", "NW"])
+
+    # Ajouter des cercles concentriques
+    circle_colors = [
+        "steelblue",
+        "cornflowerblue",
+        "steelblue",
+        "cornflowerblue",
+        "steelblue",
+        "cornflowerblue",
+    ]
+    for i, color in enumerate(circle_colors):
+        circle = plt.Circle(
+            (0, 0),
+            i / len(circle_colors),
+            transform=ax.transData._b,
+            color=color,
+            alpha=0.4,
+        )
+        ax.add_artist(circle)
+
+    # Tracer la direction du vent
+    wind_direction_rad = np.deg2rad(direction)
+    ax.plot([wind_direction_rad, wind_direction_rad], [0, 1], lw=3, color="red")
+    ax.quiver(
+        wind_direction_rad,
+        0,
+        0,
+        1,
+        angles="xy",
+        scale_units="xy",
+        scale=1,
+        color="red",
+        alpha=1,
+        width=0.015,
+        label=f"Wind direction: {direction}°",
+        zorder=5,
+        lw=1,
+    )
+
+    # Ajouter une légende
+    ax.legend(loc="upper right")
+    plt.title("Wind direction at departure time")
+
+    # Affichage avec Streamlit
+    st.pyplot(fig)
+
+
+
+
+
+
+
+
+# Définition des courses disponibles
+races = {
+    "Your race": {"date": datetime(2024, 5, 4, 15, 0), "location": "Paris"},
+    "Boston Marathon": {"date": datetime(2024, 12, 25, 9, 30), "location": "New York"},
+    "London Marathon": {"date": datetime(2024, 7, 12, 14, 0), "location": "Tokyo"},
+    "Ecotrail": {"date": datetime(2024, 8, 23, 17, 45), "location": "Berlin"}
+}
+
+# Interface utilisateur
+selected_race = st.selectbox("Choose your race", list(races.keys()))
+
+taille = st.slider("Your height (m) - to calculate your air drag", 1.4, 2.1, 1.8)  # 15 comme valeur par défaut
+runner_speed = st.slider("Your expected speed (km/h) - the speed increases drag effect", 6, 22, 17)  # 15 comme valeur par défaut
+
+
+st.title(f"Wind Impact on {selected_race}")
+
+
+
+logo_path = os.path.join(base_path, f"logo_race/{selected_race}.png")
+html_file_map = os.path.join(base_path,f"map_race/map_{selected_race}.html")
+directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
+
+
+with open(directions_path, 'r') as file:  # Remplacez 'file.json' par le chemin de votre fichier
+    data = json.load(file)
+    directions = [item['direction'] for item in data]
+    mean_direction = sum(directions)/len(directions)
+
+
+
+
+st.image(logo_path, width=100)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
+
+
+
+
+
+#st.button("Generate wind prediction")
+race_info = races[selected_race]
+race_date = race_info["date"]
+st.write(f"The departure will be {race_date.strftime('%Y-%m-%d')} at {race_date.strftime('%H:%M')}")
+
+
+
+# Prévisions de vent
+if datetime.now() + timedelta(days=7) > race_date:
+    wind_speed, wind_direction = get_wind_forecast()
+    st.write(f"Our predictions are {wind_speed} km/h of wind strength and {wind_direction} direction")
+else:
+    st.write("The predictions are not available right now, but you can play with the wind direction annd strength")
+
+# Slider pour la force et la direction du vent
+wind_speed = st.slider("Wind Strength (km/h)", 0, 100, 15)  # 15 comme valeur par défaut
+#wind_direction_dir = st.select_slider("Wind Direction (dir)", options=["Nord", "Nord-Est", "Est", "Sud-Est", "Sud", "Sud-Ouest", "Ouest", "Nord-Ouest"], value="Sud-Est")
+wind_direction = st.slider("Wind Direction (°)", 0, 360, 115)
+
+
+
+
+if st.button("Generate the impact of the wind in my race"):
+    # Charger et afficher la carte
+    html_content = load_html_map(html_file_map)
+
+    st.write("")
+    st.write("")
+    st.write("")
+
+    course_direction = round(mean_angle_degrees(directions))
+
+    st.write(f"The average direction of the race is : {course_direction}°")
+
+    st.write(f"The average direction of the wind is : {wind_direction}°")
+
+
+
+    # Création de trois colonnes pour les heures, les minutes, et les secondes
+    col1, col2 = st.columns(2)
+
+
+    with col1 : draw_wind_rose(wind_direction)
+    with col2 : components.html(html_content, height=360)  # Utiliser components.html pour intégrer la carte
+
+
+
+
+
+
+    impact = calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed)
+    st.title(f"Estimated time lost due to wind: {impact:.2f} minutes")
+    
+
+    
+
+
+

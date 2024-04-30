@@ -124,6 +124,9 @@ races = {
 # Interface utilisateur
 selected_race = st.selectbox("Choose your race", list(races.keys()))
 
+
+
+
 taille = st.slider("Your height (m) - to calculate your air drag", 1.4, 2.1, 1.8)  # 15 comme valeur par défaut
 runner_speed = st.slider("Your expected speed (km/h) - the speed increases drag effect", 6, 22, 17)  # 15 comme valeur par défaut
 
@@ -131,81 +134,88 @@ runner_speed = st.slider("Your expected speed (km/h) - the speed increases drag 
 st.title(f"Wind Impact on {selected_race}")
 
 
-
-logo_path = os.path.join(base_path, f"logo_race/{selected_race}.png")
-html_file_map = os.path.join(base_path,f"map_race/map_{selected_race}.html")
-directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
-
-
-with open(directions_path, 'r') as file:  # Remplacez 'file.json' par le chemin de votre fichier
-    data = json.load(file)
-    directions = [item['direction'] for item in data]
-    mean_direction = sum(directions)/len(directions)
-
-
-
-
-st.image(logo_path, width=100)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
-
-
-
-
-
-#st.button("Generate wind prediction")
-race_info = races[selected_race]
-race_date = race_info["date"]
-st.write(f"The departure will be {race_date.strftime('%Y-%m-%d')} at {race_date.strftime('%H:%M')}")
-
-
-
-# Prévisions de vent
-if datetime.now() + timedelta(days=7) > race_date:
-    wind_speed, wind_direction = get_wind_forecast()
-    st.write(f"Our predictions are {wind_speed} km/h of wind strength and {wind_direction} direction")
-else:
-    st.write("The predictions are not available right now, but you can play with the wind direction annd strength")
-
-# Slider pour la force et la direction du vent
-wind_speed = st.slider("Wind Strength (km/h)", 0, 100, 15)  # 15 comme valeur par défaut
-#wind_direction_dir = st.select_slider("Wind Direction (dir)", options=["Nord", "Nord-Est", "Est", "Sud-Est", "Sud", "Sud-Ouest", "Ouest", "Nord-Ouest"], value="Sud-Est")
-wind_direction = st.slider("Wind Direction (°)", 0, 360, 115)
-
-
-
-
-if st.button("Generate the impact of the wind in my race"):
-    # Charger et afficher la carte
-    html_content = load_html_map(html_file_map)
-
+if selected_race == "Your race":
     st.write("")
     st.write("")
-    st.write("")
+    st.write("Enter your race")
 
-    course_direction = round(mean_angle_degrees(directions))
-
-    st.write(f"The average direction of the race is : {course_direction}°")
-
-    st.write(f"The average direction of the wind is : {wind_direction}°")
+else : 
 
 
+    logo_path = os.path.join(base_path, f"logo_race/{selected_race}.png")
+    html_file_map = os.path.join(base_path,f"map_race/map_{selected_race}.html")
+    directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
 
-    # Création de trois colonnes pour les heures, les minutes, et les secondes
-    col1, col2 = st.columns(2)
 
-
-    with col1 : draw_wind_rose(wind_direction)
-    with col2 : components.html(html_content, height=360)  # Utiliser components.html pour intégrer la carte
+    with open(directions_path, 'r') as file:  # Remplacez 'file.json' par le chemin de votre fichier
+        data = json.load(file)
+        directions = [item['direction'] for item in data]
+        mean_direction = sum(directions)/len(directions)
 
 
 
 
+    st.image(logo_path, width=100)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
 
 
-    impact = calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed)
-    st.title(f"Estimated time lost due to wind: {impact:.2f} minutes")
-    
 
-    
+
+
+    #st.button("Generate wind prediction")
+    race_info = races[selected_race]
+    race_date = race_info["date"]
+    st.write(f"The departure will be {race_date.strftime('%Y-%m-%d')} at {race_date.strftime('%H:%M')}")
+
+
+
+    # Prévisions de vent
+    if datetime.now() + timedelta(days=7) > race_date:
+        wind_speed, wind_direction = get_wind_forecast()
+        st.write(f"Our predictions are {wind_speed} km/h of wind strength and {wind_direction} direction")
+    else:
+        st.write("The predictions are not available right now, but you can play with the wind direction annd strength")
+
+    # Slider pour la force et la direction du vent
+    wind_speed = st.slider("Wind Strength (km/h)", 0, 100, 15)  # 15 comme valeur par défaut
+    #wind_direction_dir = st.select_slider("Wind Direction (dir)", options=["Nord", "Nord-Est", "Est", "Sud-Est", "Sud", "Sud-Ouest", "Ouest", "Nord-Ouest"], value="Sud-Est")
+    wind_direction = st.slider("Wind Direction (°)", 0, 360, 115)
+
+
+
+
+    if st.button("Generate the impact of the wind in my race"):
+        # Charger et afficher la carte
+        html_content = load_html_map(html_file_map)
+
+        st.write("")
+        st.write("")
+        st.write("")
+
+        course_direction = round(mean_angle_degrees(directions))
+
+        st.write(f"The average direction of the race is : {course_direction}°")
+
+        st.write(f"The average direction of the wind is : {wind_direction}°")
+
+
+
+        # Création de trois colonnes pour les heures, les minutes, et les secondes
+        col1, col2 = st.columns(2)
+
+
+        with col1 : draw_wind_rose(wind_direction)
+        with col2 : components.html(html_content, height=360)  # Utiliser components.html pour intégrer la carte
+
+
+
+
+
+
+        impact = calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed)
+        st.title(f"Estimated time lost due to wind: {impact:.2f} minutes")
+        
+
+        
 
 
 

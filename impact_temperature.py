@@ -55,7 +55,7 @@ st.image("logo_enduraw.png", width=100)  # Modifie "path_to_logo.png" par le che
 
 # Interface utilisateur
 st.title("Heat impact on the performance")
-st.write("Enter your expected race time and the temperature")
+
 
 st.write("")
 st.markdown("The calculation are from this [scientific paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8677617/)")
@@ -63,6 +63,7 @@ st.markdown("The calculation are from this [scientific paper](https://www.ncbi.n
 
 st.write("")
 st.write("")
+st.write("Enter your expected race time and the temperature")
 
 
 

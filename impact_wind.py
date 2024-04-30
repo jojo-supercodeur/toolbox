@@ -137,7 +137,7 @@ st.title(f"Wind Impact on {selected_race}")
 if selected_race == "Your race":
     st.write("")
     st.write("")
-    st.write("Enter your race")
+    st.write("Enter your race and informations")
 
 else : 
 

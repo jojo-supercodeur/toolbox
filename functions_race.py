@@ -10,7 +10,7 @@ import matplotlib.image as mpimg
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 #from scipy.ndimage import gaussian_filter1d
 import matplotlib.pyplot as plt
-import folium
+#import folium
 import gpxpy
 import requests
 import datetime

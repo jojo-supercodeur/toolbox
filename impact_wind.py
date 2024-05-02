@@ -89,7 +89,7 @@ else :
 
     logo_path = os.path.join(base_path, f"logo_race/{selected_race}.png")
     html_file_map = os.path.join(base_path,f"map_race/map_{selected_race}.html")
-    html_file_weather = os.path.join(base_path,f"weather_race/map_{selected_race}.html")
+    html_file_weather = os.path.join(base_path,f"weather_race/wind_help_{selected_race}.html")
     directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
 
 

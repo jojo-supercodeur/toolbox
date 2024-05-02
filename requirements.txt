@@ -10,5 +10,5 @@ matplotlib==3.8.1
 
 streamlit==1.10.0
 
-scipy==1.7.3  # Assurez-vous d'utiliser une version compatible avec vos autres packages
+scipy==1.9.0  # Assurez-vous d'utiliser une version compatible avec vos autres packages
 absl-py==0.12.0

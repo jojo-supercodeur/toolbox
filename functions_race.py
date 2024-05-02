@@ -8,7 +8,7 @@ import numpy as np
 import math
 import matplotlib.image as mpimg
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from scipy.ndimage import gaussian_filter1d
+#from scipy.ndimage import gaussian_filter1d
 import matplotlib.pyplot as plt
 import folium
 import gpxpy
@@ -131,7 +131,7 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
     # print(len(valeurs))
     # print(wind_speed)
     # plt.show()
-    valeurs_smoothed = gaussian_filter1d(valeurs, sigma=30)
+    valeurs_smoothed = valeurs #gaussian_filter1d(valeurs, sigma=30)
 
     df = pd.DataFrame.from_dict(
         {"Wind help": valeurs_smoothed, "Distance": range(len(valeurs))}

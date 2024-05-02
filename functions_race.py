@@ -20,6 +20,7 @@ import matplotlib.colors as mcolors
 import plotly.express as px
 import pandas as pd
 from datetime import datetime, timedelta
+import plotly.graph_objs as go
 
 
 
@@ -192,7 +193,10 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
         opacity=0.1,
     )
     #fig.write_html(f"PUBLIC/output/{race_name}/wind_help_{race_name}.html")
-    fig.show()
+    #fig.show()
+    fig = go.Figure()
+    # Ajoutez vos tracés à fig ici
+    return fig  # Retournez fig au lieu de fig.show()
 
     # fig, ax = plt.subplots()
     # ax.plot(direction_list_degrees)

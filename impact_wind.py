@@ -160,10 +160,12 @@ else :
 
 
         ##with col1 : draw_wind_rose(wind_direction+180,"prevision")
-        components.html(html_content_weather) #, height=360)  # Utiliser components.html pour intégrer la carte
+        components.html(html_content_weather, height=600)  # Utiliser components.html pour intégrer la carte
 
         st.write("Here some informations about the live weather (next 48hours) => accurate")
-        impact_vent_liste(wind_direction, wind_speed,directions,selected_race)
+        #impact_vent_liste(wind_direction, wind_speed,directions,selected_race)
+        fig = impact_vent_liste(wind_direction, wind_speed, directions, selected_race)
+        st.plotly_chart(fig, use_container_width=True) 
 
 
 

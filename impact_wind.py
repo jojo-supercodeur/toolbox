@@ -158,7 +158,7 @@ else :
 
 
         with col1 : draw_wind_rose(wind_direction+180,"prevision")
-        with col2 : components.html(html_file_weather, height=360)  # Utiliser components.html pour intégrer la carte
+        with col2 : components.html(html_content_weather, height=360)  # Utiliser components.html pour intégrer la carte
 
 
 

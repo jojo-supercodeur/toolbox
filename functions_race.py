@@ -44,8 +44,8 @@ def draw_wind_rose(direction,status):
     wind_direction_rad = np.deg2rad(direction)
     ax.plot([wind_direction_rad, wind_direction_rad], [0, 1], lw=3, color="red")
     if status == "prevision" :
-        ax.plot([wind_direction_rad+0.1, wind_direction_rad], [0, 1], lw=3, color="blue")
-        ax.plot([wind_direction_rad-0.1, wind_direction_rad], [0, 1], lw=3, color="blue")
+        ax.plot([wind_direction_rad+10, wind_direction_rad], [0, 1], lw=3, color="blue")
+        ax.plot([wind_direction_rad-10, wind_direction_rad], [0, 1], lw=3, color="blue")
     ax.quiver(
         wind_direction_rad,
         0,

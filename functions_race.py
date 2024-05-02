@@ -194,7 +194,7 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
     )
     #fig.write_html(f"PUBLIC/output/{race_name}/wind_help_{race_name}.html")
     #fig.show()
-    fig = go.Figure()
+    #fig = go.Figure()
     # Ajoutez vos tracés à fig ici
     return fig  # Retournez fig au lieu de fig.show()
 

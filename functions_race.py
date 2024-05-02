@@ -9,7 +9,7 @@ import math
 
 
 
-def draw_wind_rose(direction):
+def draw_wind_rose(direction,status):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw={"projection": "polar"})
     fig.patch.set_facecolor('none')
 
@@ -43,6 +43,9 @@ def draw_wind_rose(direction):
     # Tracer la direction du vent
     wind_direction_rad = np.deg2rad(direction)
     ax.plot([wind_direction_rad, wind_direction_rad], [0, 1], lw=3, color="red")
+    if status == "prevision" :
+        ax.plot([wind_direction_rad+0.1, wind_direction_rad], [0, 1], lw=3, color="blue")
+        ax.plot([wind_direction_rad-0.1, wind_direction_rad], [0, 1], lw=3, color="blue")
     ax.quiver(
         wind_direction_rad,
         0,

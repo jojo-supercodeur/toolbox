@@ -150,15 +150,15 @@ else :
         col1, col2 = st.columns(2)
 
 
-        with col1 : draw_wind_rose(wind_direction)
+        with col1 : draw_wind_rose(wind_direction,"live")
         with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
 
-        st.write("Here some informations about the live weather (next 48hours")
+        st.write("Here some informations about the live weather (next 48hours)")
         col1, col2 = st.columns(2)
 
 
-        with col1 : draw_wind_rose(wind_direction+180)
-        with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
+        with col1 : draw_wind_rose(wind_direction+180,"prevision")
+        with col2 : components.html(html_file_weather, height=360)  # Utiliser components.html pour intégrer la carte
 
 
 

@@ -6,6 +6,8 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+from functions_race import (
+    draw_wind_rose,)
 
 
 
@@ -47,64 +49,6 @@ def mean_angle_degrees(angles):
     mean_angle = math.degrees(math.atan2(y, x))
     return mean_angle if mean_angle >= 0 else mean_angle + 360
 
-def draw_wind_rose(direction):
-    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw={"projection": "polar"})
-    fig.patch.set_facecolor('none')
-
-
-
-    # Configurer l'axe radial
-    ax.set_theta_zero_location("N")
-    ax.set_theta_direction(-1)
-    ax.set_rticks([])
-    ax.set_yticklabels([])
-    ax.set_xticks(np.arange(0, 2.0 * np.pi, np.pi / 4))
-    ax.set_xticklabels(["N", "NE", "E", "SE", "S", "SW", "W", "NW"])
-
-    # Ajouter des cercles concentriques
-    circle_colors = [
-        "steelblue",
-        "cornflowerblue",
-        "steelblue",
-        "cornflowerblue",
-        "steelblue",
-        "cornflowerblue",
-    ]
-    for i, color in enumerate(circle_colors):
-        circle = plt.Circle(
-            (0, 0),
-            i / len(circle_colors),
-            transform=ax.transData._b,
-            color=color,
-            alpha=0.4,
-        )
-        ax.add_artist(circle)
-
-    # Tracer la direction du vent
-    wind_direction_rad = np.deg2rad(direction)
-    ax.plot([wind_direction_rad, wind_direction_rad], [0, 1], lw=3, color="red")
-    ax.quiver(
-        wind_direction_rad,
-        0,
-        0,
-        1,
-        angles="xy",
-        scale_units="xy",
-        scale=1,
-        color="red",
-        alpha=1,
-        width=0.015,
-        label=f"Wind direction: {direction}°",
-        zorder=5,
-        lw=1,
-    )
-
-    # Ajouter une légende
-    ax.legend(loc="upper right")
-    plt.title("Wind direction at departure time")
-
-    # Affichage avec Streamlit
-    st.pyplot(fig)
 
 
 
@@ -171,9 +115,9 @@ else :
     # Prévisions de vent
     if datetime.now() + timedelta(days=7) > race_date:
         wind_speed, wind_direction = get_wind_forecast()
-        st.write(f"Our predictions are {wind_speed} km/h of wind strength and {wind_direction} direction")
+        st.write(f"Our predictions are {wind_speed} km/h of wind strength and {wind_direction} direction, but feel free to play with it")
     else:
-        st.write("The predictions are not available right now, but you can play with the wind direction annd strength")
+        st.write("The predictions are not available right now. We propose the average values over the last 10 years, but feel free to play with it")
 
     # Slider pour la force et la direction du vent
     wind_speed = st.slider("Wind Strength (km/h)", 0, 100, 15)  # 15 comme valeur par défaut
@@ -212,7 +156,11 @@ else :
 
 
         impact = calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed)
-        st.title(f"Estimated time lost due to wind: {impact:.2f} minutes")
+
+        if impact >= 0:
+            st.title(f"Estimated time gained due to wind: {impact:.2f} minutes")
+        else :
+            st.title(f"Estimated time lost due to wind: {-impact:.2f} minutes")
         
 
         

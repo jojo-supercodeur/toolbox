@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 from functions_race import (
-    draw_wind_rose,)
+    draw_wind_rose,
+    )
 
 
 
@@ -88,6 +89,7 @@ else :
 
     logo_path = os.path.join(base_path, f"logo_race/{selected_race}.png")
     html_file_map = os.path.join(base_path,f"map_race/map_{selected_race}.html")
+    html_file_weather = os.path.join(base_path,f"weather_race/map_{selected_race}.html")
     directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
 
 
@@ -129,7 +131,8 @@ else :
 
     if st.button("Generate the impact of the wind in my race"):
         # Charger et afficher la carte
-        html_content = load_html_map(html_file_map)
+        html_content_map = load_html_map(html_file_map)
+        html_content_weather = load_html_map(html_file_weather)
 
         st.write("")
         st.write("")
@@ -148,7 +151,15 @@ else :
 
 
         with col1 : draw_wind_rose(wind_direction)
-        with col2 : components.html(html_content, height=360)  # Utiliser components.html pour intégrer la carte
+        with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
+
+        st.write("Here some informations about the live weather (next 48hours")
+        col1, col2 = st.columns(2)
+
+
+        with col1 : draw_wind_rose(wind_direction+180)
+        with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
+
 
 
 

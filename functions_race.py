@@ -112,7 +112,7 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
     for direction_degrees in direction_list_degrees:
         direction_rad = math.radians(direction_degrees)
         # diff_rad = vent_rad - direction_rad
-        diff_rad_deg = wind_degrees - direction_degrees +180    #on prend le vent dans la bonne direction 
+        diff_rad_deg = wind_degrees - direction_degrees    #on prend le vent dans la bonne direction 
         diff_rad = math.radians(diff_rad_deg)
 
         # # Normalisation de l'angle entre -pi et pi

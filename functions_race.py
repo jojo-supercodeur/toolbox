@@ -6,6 +6,20 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import matplotlib.image as mpimg
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from scipy.ndimage import gaussian_filter1d
+import matplotlib.pyplot as plt
+import folium
+import gpxpy
+import requests
+import datetime
+import matplotlib
+from typing import Optional
+import matplotlib.colors as mcolors
+import plotly.express as px
+import pandas as pd
+from datetime import datetime, timedelta
 
 
 
@@ -77,7 +91,7 @@ def draw_wind_rose(direction,status):
 
 
 
-def impact_vent_liste(gpx_filename, json_filename, index):
+def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_name):
     """
     Obtenir les données du vent et convertir les degrés en radians
         Exemple d'utilisation
@@ -86,17 +100,12 @@ def impact_vent_liste(gpx_filename, json_filename, index):
 
     print(valeurs, wind_speed)
     """
-    wind_speed, wind_degrees = get_wind_data(json_filename, index)
+
     vent_rad = math.radians(wind_degrees)
 
     # Initialisation de la liste de valeurs de retour
     valeurs = []
     valeursdeg = []
-    direction_list_degrees = calculate_orientation(gpx_filename)
-
-    with open(json_filename, "r") as f:
-        json_data = json.load(f)
-    race_name = json_data['race']['name']
 
     # Calcul de la valeur de retour pour chaque direction
     for direction_degrees in direction_list_degrees:
@@ -138,7 +147,7 @@ def impact_vent_liste(gpx_filename, json_filename, index):
     )
     fig.update_layout(width=626, 
                         height=500, 
-                        paper_bgcolor=CUSTOM_COLORS["white"],
+                        paper_bgcolor="white",
                         dragmode="pan",  # Définir le mode de déplacement par défaut sur "pan"
                         )
     fig.update_traces(
@@ -182,25 +191,25 @@ def impact_vent_liste(gpx_filename, json_filename, index):
         fillcolor="red",
         opacity=0.1,
     )
-    fig.write_html(f"PUBLIC/output/{race_name}/wind_help_{race_name}.html")
-    # fig.show()
+    #fig.write_html(f"PUBLIC/output/{race_name}/wind_help_{race_name}.html")
+    fig.show()
 
-    fig, ax = plt.subplots()
-    ax.plot(direction_list_degrees)
-    plt.title("Strength of the wind")
-    plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
-    plt.ylabel("Sens race")
-    plt.savefig(f"PUBLIC/output/{race_name}/sens_race_{race_name}.png", dpi=300, bbox_inches="tight")
-    plt.show()
-    plt.close()
+    # fig, ax = plt.subplots()
+    # ax.plot(direction_list_degrees)
+    # plt.title("Strength of the wind")
+    # plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
+    # plt.ylabel("Sens race")
+    # plt.savefig(f"PUBLIC/output/{race_name}/sens_race_{race_name}.png", dpi=300, bbox_inches="tight")
+    # plt.show()
+    # plt.close()
 
-    fig, ax = plt.subplots()
-    ax.plot(valeursdeg)
-    plt.title("Strength of the wind")
-    plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
-    plt.ylabel("Sens race ")
-    plt.savefig(f"PUBLIC/output/{race_name}/sens_diff_{race_name}.png", dpi=300, bbox_inches="tight")
-    plt.show()
-    plt.close()
+    # fig, ax = plt.subplots()
+    # ax.plot(valeursdeg)
+    # plt.title("Strength of the wind")
+    # plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
+    # plt.ylabel("Sens race ")
+    # plt.savefig(f"PUBLIC/output/{race_name}/sens_diff_{race_name}.png", dpi=300, bbox_inches="tight")
+    # plt.show()
+    # plt.close()
 
-    return valeurs, wind_speed
+    # return valeurs, wind_speed

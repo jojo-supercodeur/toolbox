@@ -8,6 +8,7 @@ import numpy as np
 import math
 from functions_race import (
     draw_wind_rose,
+    impact_vent_liste
     )
 
 
@@ -93,6 +94,7 @@ else :
     directions_path = os.path.join(base_path,f"directions_race/{selected_race}_directions.json")
 
 
+
     with open(directions_path, 'r') as file:  # Remplacez 'file.json' par le chemin de votre fichier
         data = json.load(file)
         directions = [item['direction'] for item in data]
@@ -153,12 +155,15 @@ else :
         with col1 : draw_wind_rose(wind_direction,"live")
         with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
 
-        st.write("Here some informations about the live weather (next 48hours)")
+        st.write("Here some informations about the live weather (next 48hours) => not accurate yet")
         ## col1, col2 = st.columns(2)
 
 
         ##with col1 : draw_wind_rose(wind_direction+180,"prevision")
-        components.html(html_content_weather, height=360)  # Utiliser components.html pour intégrer la carte
+        components.html(html_content_weather) #, height=360)  # Utiliser components.html pour intégrer la carte
+
+        st.write("Here some informations about the live weather (next 48hours) => accurate")
+        impact_vent_liste(wind_direction, wind_speed,directions,selected_race  )
 
 
 

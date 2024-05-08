@@ -117,7 +117,7 @@ if points:
     # Exemple d'étape suivante : afficher les premiers points
     st.write(f"First 5 points: {points[:5]}")
 
-    fig = generate_elevation_and_gradient_plot(uploaded_file, threshold)
+    fig = generate_elevation_and_gradient_plot(gpx_file, threshold)
     st.plotly_chart(fig)
 
 

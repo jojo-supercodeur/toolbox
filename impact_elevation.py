@@ -56,16 +56,18 @@ base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du scr
 
 
 # Interface utilisateur
+
+st.title("Course Altitude and Gradient Profile")
 selected_race = st.selectbox("Choose your race", list(races.keys()))
 
 
 
 
-taille = st.slider("Your height (m) - to calculate your air drag", 1.4, 2.1, 1.8)  # 15 comme valeur par défaut
-runner_speed = st.slider("Your expected speed (km/h) - the speed increases drag effect", 6, 22, 17)  # 15 comme valeur par défaut
+taille = st.slider("Your uphill level - from flat runneer to uphill runner", 1.4, 2.1, 1.8)  # 15 comme valeur par défaut
+runner_speed = st.slider("Your expected speed (km/h) - the speed impacts the grade adjusted speed", 6, 22, 17)  # 15 comme valeur par défaut
 
 
-st.title(f"Wind Impact on {selected_race}")
+#st.title(f"Wind Impact on {selected_race}")
 
 
 if selected_race == "Your race":
@@ -94,10 +96,10 @@ else :
 
 
 
-    st.image(logo_path, width=100)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
+    st.image(logo_path, width=300)  # Modifie "path_to_logo.png" par le chemin vers ton fichier image ou URL, et ajuste la largeur selon tes besoins.
 
-    st.image(elev_path, width=100)
-    st.image(grad_path, width=100)
+    st.image(elev_path)
+    st.image(grad_path)
 
 
 
@@ -108,6 +110,4 @@ st.plotly_chart(fig_gradient)
 
 
 
-# Call the function to display the charts
-st.title("Course Altitude and Gradient Profile")
 

@@ -84,16 +84,18 @@ points = []
 if selected_course == "Upload your own GPX":
     uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])  
 
-    gpx = gpxpy.parse(uploaded_file)
+    if uploaded_file is not None:
 
-    track = gpx.tracks[0] if gpx.tracks else None
-    segment = track.segments[0] if track and track.segments else None
+        gpx = gpxpy.parse(uploaded_file)
 
-    if segment:
-        points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
-        st.write(f"Number of points in the uploaded GPX file: {len(points)}")
-    else:
-        st.write("The uploaded GPX file doesn't contain a valid track.")
+        track = gpx.tracks[0] if gpx.tracks else None
+        segment = track.segments[0] if track and track.segments else None
+
+        if segment:
+            points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
+            st.write(f"Number of points in the uploaded GPX file: {len(points)}")
+        else:
+            st.write("The uploaded GPX file doesn't contain a valid track.")
 
 # Sinon, (si une course prédéfinie est sélectionnée)
 else :

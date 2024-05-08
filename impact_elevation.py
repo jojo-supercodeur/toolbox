@@ -4,7 +4,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 import os
 import json
-import gpxgpy
+import gpxpy
 
 # Example simulated data
 data = {

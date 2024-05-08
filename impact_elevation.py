@@ -62,9 +62,11 @@ import gpxpy
 
 # Courses prédéfinies avec des fichiers GPX fictifs
 predefined_courses = {
-    "Sample Course 1": "data/sample_course1.gpx",
-    "Sample Course 2": "data/sample_course2.gpx",
-    "Sample Course 3": "data/sample_course3.gpx"
+    "Boston Marathon",
+    "London Marathon",
+    "Ecotrail",
+    "Upload your own GPX"
+    
 }
 
 # Interface utilisateur
@@ -77,21 +79,11 @@ uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
 # Variable pour stocker les points GPS
 points = []
 
-# Si une course prédéfinie est sélectionnée
-if selected_course:
-    gpx_path = predefined_courses[selected_course]
-    with open(gpx_path, "r") as gpx_file:
-        gpx = gpxpy.parse(gpx_file)
+# Si un fichier GPX est demandé
 
-    track = gpx.tracks[0] if gpx.tracks else None
-    segment = track.segments[0] if track and track.segments else None
+if selected_course == "Upload your own GPX":
+    uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])  
 
-    if segment:
-        points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
-        st.write(f"Number of points in {selected_course}: {len(points)}")
-
-# Si un fichier GPX personnalisé est téléchargé
-elif uploaded_file is not None:
     gpx = gpxpy.parse(uploaded_file)
 
     track = gpx.tracks[0] if gpx.tracks else None
@@ -102,6 +94,22 @@ elif uploaded_file is not None:
         st.write(f"Number of points in the uploaded GPX file: {len(points)}")
     else:
         st.write("The uploaded GPX file doesn't contain a valid track.")
+
+# Sinon, (si une course prédéfinie est sélectionnée)
+else :
+    gpx_path = os.path.join(base_path, f"gpx_race/{selected_course}.gpx")
+    with open(gpx_path, "r") as gpx_file:
+        gpx = gpxpy.parse(gpx_file)
+
+    track = gpx.tracks[0] if gpx.tracks else None
+    segment = track.segments[0] if track and track.segments else None
+
+    if segment:
+        points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
+        st.write(f"Number of points in {selected_course}: {len(points)}")
+
+
+    
 
 # Si l'une des deux conditions est remplie, on passe à l'étape suivante
 if points:
@@ -128,6 +136,22 @@ if points:
 
 
 
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
 
 
 

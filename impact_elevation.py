@@ -108,8 +108,9 @@ if points:
     st.write(f"First 5 points: {points[:5]}")
 
     st.write(gpx_path)
+    st.write(gpx)
 
-    fig = generate_elevation_and_gradient_plot(gpx_path, threshold)
+    fig = generate_elevation_and_gradient_plot(gpx, threshold)
     st.plotly_chart(fig)
 
 

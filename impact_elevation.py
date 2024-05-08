@@ -84,6 +84,7 @@ if selected_course == "Upload your own GPX":
 
     if uploaded_file is not None:
 
+        gpx_path = uploaded_file
         gpx = gpxpy.parse(uploaded_file)
 
         track = gpx.tracks[0] if gpx.tracks else None
@@ -116,8 +117,8 @@ if points:
     # Exemple d'étape suivante : afficher les premiers points
     st.write(f"First 5 points: {points[:5]}")
 
-fig = generate_elevation_and_gradient_plot(uploaded_file, threshold)
-st.plotly_chart(fig)
+    fig = generate_elevation_and_gradient_plot(uploaded_file, threshold)
+    st.plotly_chart(fig)
 
 
 

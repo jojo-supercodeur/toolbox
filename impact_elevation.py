@@ -4,6 +4,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 import os
 import json
+import gpxgpy
 
 # Example simulated data
 data = {
@@ -57,8 +58,7 @@ base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du scr
 
 
 
-import streamlit as st
-import gpxpy
+
 
 # Courses prédéfinies avec des fichiers GPX fictifs
 predefined_courses = {
@@ -70,10 +70,10 @@ predefined_courses = {
 }
 
 # Interface utilisateur
-st.title("Race Selection or Custom GPX Upload")
+st.title("Course Altitude and Gradient Profile")
 
 # Sélectionner une course prédéfinie ou télécharger un fichier GPX
-selected_course = st.selectbox("Select a predefined course", [""] + list(predefined_courses))
+selected_course = st.selectbox("Select a predefined course or upload your GPX", [""] + list(predefined_courses))
 #uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
 
 # Variable pour stocker les points GPS
@@ -138,6 +138,22 @@ if points:
 
 
 
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
 st.write("")
 st.write("")
 st.write("")

@@ -6,38 +6,15 @@ import os
 import json
 import gpxpy
 
-# Example simulated data
-data = {
-    "Distance": range(0, 100),
-    "Altitude": [100 + i*10 for i in range(100)],
-    "Gradient": [5 - i*0.05 for i in range(100)]
-}
-
-# Convert the data to a DataFrame
-course_data = pd.DataFrame(data)
+from functions_race import (
+    draw_wind_rose,
+    impact_vent_liste,
+    generate_elevation_and_gradient_plot
+    )
 
 
-# Create an altitude chart
-fig_altitude = px.line(
-    course_data,
-    x="Distance",
-    y="Altitude",
-    title="Course Altitude Profile",
-    labels={"Distance": "Distance (km)", "Altitude": "Altitude (m)"},
-)
-fig_altitude.update_layout(paper_bgcolor="white", plot_bgcolor="white")
-fig_altitude.update_traces(line_color="blue")
 
-# Create a gradient chart
-fig_gradient = px.line(
-    course_data,
-    x="Distance",
-    y="Gradient",
-    title="Course Gradient Profile",
-    labels={"Distance": "Distance (km)", "Gradient": "Gradient (%)"},
-)
-fig_gradient.update_layout(paper_bgcolor="white", plot_bgcolor="white")
-fig_gradient.update_traces(line_color="red")
+
 
 # Définition des courses disponibles
 races = {
@@ -48,6 +25,25 @@ races = {
 }
 
 base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72,8 +68,10 @@ predefined_courses = {
 # Interface utilisateur
 st.title("Course Altitude and Gradient Profile")
 
+threshold = st.slider("Set Gradient Threshold (%) for the visualisation", min_value=0, max_value=20, value=10)
+
 # Sélectionner une course prédéfinie ou télécharger un fichier GPX
-selected_course = st.selectbox("Select a predefined course or upload your GPX", [""] + list(predefined_courses))
+selected_course = st.selectbox("Select a predefined course or upload your GPX", ["Choose your race"] + list(predefined_courses))
 #uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
 
 # Variable pour stocker les points GPS
@@ -118,6 +116,8 @@ if points:
     # Exemple d'étape suivante : afficher les premiers points
     st.write(f"First 5 points: {points[:5]}")
 
+fig = generate_elevation_and_gradient_plot(uploaded_file, threshold)
+st.plotly_chart(fig)
 
 
 
@@ -137,7 +137,37 @@ if points:
 
 
 
-
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
+st.write("")
 st.write("")
 st.write("")
 st.write("")

@@ -183,3 +183,106 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees,race_name
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import gpxpy
+import numpy as np
+import plotly.graph_objs as go
+import streamlit as st
+
+def generate_elevation_and_gradient_plot(gpx_file, threshold):
+    # Charger le fichier GPX
+    gpx = gpxpy.parse(gpx_file)
+
+    # Extraire les points et les données d'altitude
+    distances = [0]
+    elevations = []
+
+    for track in gpx.tracks:
+        for segment in track.segments:
+            for i, point in enumerate(segment.points):
+                if i > 0:
+                    prev_point = segment.points[i - 1]
+                    distance_diff = point.distance_2d(prev_point)
+                    distances.append(distances[-1] + distance_diff)
+                elevations.append(point.elevation)
+
+    # Calculer le gradient en pourcentage
+    epsilon = 1e-7  # Petite constante pour éviter les divisions par zéro
+    for i in range(len(elevations)):
+        if elevations[i] is None:
+            elevations[i] = elevations[i - 1]
+
+    gradient = np.gradient(elevations) / (np.gradient(distances) + epsilon) * 100
+    gradient = [g if g <= 100 else 0 for g in gradient]
+
+    # Lisser le gradient avec un filtre
+    gradient_smooth = np.convolve(gradient, np.ones(10) / 10, mode='same')
+
+    # Tracer le profil d'altitude et le gradient en utilisant Plotly
+    fig = go.Figure()
+
+    # Tracé d'altitude
+    fig.add_trace(go.Scatter(x=[d / 1000 for d in distances], y=elevations, name='Elevation (m)', line=dict(color='blue', width=2)))
+
+    # Tracé du gradient
+    fig.add_trace(go.Scatter(x=[d / 1000 for d in distances], y=gradient_smooth, name='Gradient (%)', line=dict(color='red', width=2), yaxis='y2'))
+
+    # Ajouter des zones colorées au-dessus du seuil
+    for i in range(len(gradient_smooth)):
+        if gradient_smooth[i] > threshold:
+            fig.add_shape(
+                type="rect",
+                x0=distances[i] / 1000,
+                x1=(distances[i] / 1000) + 0.1,
+                y0=0,
+                y1=max(elevations),
+                fillcolor="gray",
+                opacity=0.3,
+                layer="below",
+                line_width=0
+            )
+
+    # Mise en forme du graphique avec double axe
+    fig.update_layout(
+        title="Elevation and Gradient Profile",
+        xaxis_title="Distance (km)",
+        yaxis=dict(title="Elevation (m)"),
+        yaxis2=dict(title="Gradient (%)", overlaying='y', side='right', showgrid=False),
+        template="plotly_white"
+    )
+
+    return fig
+

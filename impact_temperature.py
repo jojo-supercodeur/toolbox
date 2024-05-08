@@ -27,7 +27,7 @@ def calculate_performance_loss(base_time, temperature):
 
 def calculate_performance_loss_flouris(base_time, temperature):
     total_minutes = base_time.hour * 60 + base_time.minute + base_time.second / 60.0
-    loss_percentage= 1,2095136-0.22334*temperature+0.01031*temperature*temperature
+    loss_percentage= 1.2095136-0.22334*temperature+0.01031*temperature*temperature
     time_loss_minutes = total_minutes * (loss_percentage / 100)
 
 

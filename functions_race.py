@@ -224,7 +224,8 @@ import streamlit as st
 
 def generate_elevation_and_gradient_plot(gpx_file, threshold):
     # Charger le fichier GPX
-    gpx = gpxpy.parse(gpx_file)
+    gpx_content = gpx_file.read().decode("utf-8")
+    gpx_content = gpxpy.parse(gpx_file)
 
     # Extraire les points et les données d'altitude
     distances = [0]

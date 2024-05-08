@@ -55,6 +55,96 @@ base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du scr
 
 
 
+
+
+import streamlit as st
+import gpxpy
+import pandas as pd
+
+# Définir une liste de courses prédéfinies (exemple)
+predefined_courses = {
+    "Sample Course 1": "data/sample_course1.gpx",
+    "Sample Course 2": "data/sample_course2.gpx",
+    "Sample Course 3": "data/sample_course3.gpx"
+}
+
+# Interface utilisateur
+st.title("Choose a Race or Upload a GPX File")
+
+# Options pour choisir entre une course prédéfinie ou un fichier personnalisé
+selection_mode = st.selectbox("Choose an option", ["Select a predefined course", "Upload a custom GPX file"])
+
+# Variables pour stocker les points GPS
+points = []
+
+if selection_mode == "Select a predefined course":
+    # Afficher le menu déroulant pour choisir une course prédéfinie
+    selected_course = st.selectbox("Select a predefined course", list(predefined_courses.keys()))
+
+    # Charger le fichier GPX prédéfini
+    gpx_path = predefined_courses[selected_course]
+    with open(gpx_path, "r") as gpx_file:
+        gpx = gpxpy.parse(gpx_file)
+
+    # Extraire les points GPS
+    track = gpx.tracks[0] if gpx.tracks else None
+    segment = track.segments[0] if track and track.segments else None
+
+    if segment:
+        points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
+        st.write(f"Number of points in {selected_course}: {len(points)}")
+
+elif selection_mode == "Upload a custom GPX file":
+    # Uploader le fichier GPX personnalisé
+    uploaded_file = st.file_uploader("Choose a GPX file", type=["gpx"])
+
+    if uploaded_file is not None:
+        # Lire le fichier GPX téléchargé
+        gpx = gpxpy.parse(uploaded_file)
+
+        # Extraire les points GPS
+        track = gpx.tracks[0] if gpx.tracks else None
+        segment = track.segments[0] if track and track.segments else None
+
+        if segment:
+            points = [(point.latitude, point.longitude, point.elevation) for point in segment.points]
+            st.write(f"Number of points in the uploaded GPX file: {len(points)}")
+        else:
+            st.write("The uploaded GPX file doesn't contain a valid track.")
+    else:
+        st.write("Upload a GPX file to see its details.")
+
+# Afficher un aperçu des premiers points GPS extraits
+if points:
+    st.write(f"First 5 points: {points[:5]}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Interface utilisateur
 
 st.title("Course Altitude and Gradient Profile")
@@ -63,7 +153,9 @@ selected_race = st.selectbox("Choose your race", list(races.keys()))
 
 
 
-taille = st.slider("Your uphill level - from flat runneer to uphill runner", 1.4, 2.1, 1.8)  # 15 comme valeur par défaut
+#uphill_level = st.slider("Your uphill level - from flat runner to uphill runner", 0, 1, 0.5)  # 0,5 comme valeur par défaut
+uphill_level = st.select_slider("Wind Direction (dir)", options=["Flat runner", "Prefer flat section","Average", "Good when hilly", "Uphill runner", "Vertical Kilometer runner"], value="Average")
+
 runner_speed = st.slider("Your expected speed (km/h) - the speed impacts the grade adjusted speed", 6, 22, 17)  # 15 comme valeur par défaut
 
 

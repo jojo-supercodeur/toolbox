@@ -88,6 +88,7 @@ if selected_course == "Upload your own GPX":
 # Sinon, (si une course prédéfinie est sélectionnée)
 elif selected_course in predefined_courses :
     gpx_path = os.path.join(base_path, f"gpx_race/{selected_course}.gpx")
+    st.write(gpx_path)
     with open(gpx_path, "r") as gpx_file:
         gpx = gpxpy.parse(gpx_file)
 

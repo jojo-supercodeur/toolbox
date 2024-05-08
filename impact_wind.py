@@ -155,17 +155,20 @@ else :
         with col1 : draw_wind_rose(wind_direction,"live")
         with col2 : components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
 
-        st.write("Here some informations about the live weather (next 48hours) => not accurate yet")
+        #st.write("Here some informations about the live weather (next 48hours) => not accurate yet")
         ## col1, col2 = st.columns(2)
 
 
         ##with col1 : draw_wind_rose(wind_direction+180,"prevision")
-        components.html(html_content_weather, height=600)  # Utiliser components.html pour intégrer la carte
+        #components.html(html_content_weather, height=600)  # Utiliser components.html pour intégrer la carte
 
-        st.write("Here some informations about the live weather (next 48hours) => accurate")
+        st.write("Here the help of the wind during the race")
         #impact_vent_liste(wind_direction, wind_speed,directions,selected_race)
         fig = impact_vent_liste(wind_direction, wind_speed, directions, selected_race)
         st.plotly_chart(fig, use_container_width=True) 
+
+
+  
 
 
 
@@ -176,9 +179,9 @@ else :
         impact = calculate_wind_assistance(course_direction, wind_direction, runner_speed, wind_speed)
 
         if impact >= 0:
-            st.title(f"Estimated time gained due to wind: {impact:.2f} minutes")
+            st.title(f"Estimated time gained due to wiiind: {impact:.2f} minutes")
         else :
-            st.title(f"Estimated time lost due to wind: {-impact:.2f} minutes")
+            st.title(f"Estimated time lost due to wiiind: {-impact:.2f} minutes")
         
 
         

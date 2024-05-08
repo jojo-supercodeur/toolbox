@@ -90,72 +90,58 @@ def draw_wind_rose(direction,status):
 
 
 
-
-
-def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_name):
+def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees,race_name):
     """
-    Obtenir les données du vent et convertir les degrés en radians
-        Exemple d'utilisation
-    index = 8  # Choisir l'index correspondant à l'heure souhaitée
-    valeurs, wind_speed = impact_vent_liste(gpx_file, globaljsonfile , index)
-
-    print(valeurs, wind_speed)
+    Obtenir les données du vent et convertir les degrés en radians.
     """
-
     vent_rad = math.radians(wind_degrees)
 
-    # Initialisation de la liste de valeurs de retour
+    # Initialisation des listes de valeurs de retour
     valeurs = []
     valeursdeg = []
 
-    # Calcul de la valeur de retour pour chaque direction
+    # Calculer les valeurs pour chaque direction
     for direction_degrees in direction_list_degrees:
         direction_rad = math.radians(direction_degrees)
-        # diff_rad = vent_rad - direction_rad
-        diff_rad_deg = wind_degrees - direction_degrees    #on prend le vent dans la bonne direction 
+        diff_rad_deg = wind_degrees - direction_degrees
         diff_rad = math.radians(diff_rad_deg)
-
-        # # Normalisation de l'angle entre -pi et pi
-        # if diff_rad > math.pi:
-        #     diff_rad -= 2 * math.pi
-        # elif diff_rad < -math.pi:
-        #     diff_rad += 2 * math.pi
 
         # Calcul de la valeur de retour entre -1 et 1
         valeur = math.cos(diff_rad)
         valeurs.append(valeur)
         valeursdeg.append(diff_rad_deg)
 
-        # Tracer le graphe
- 
+    # Lisser les valeurs (si nécessaire)
+    valeurs_smoothed = valeurs
 
-    # print(len(valeurs))
-    # print(wind_speed)
-    # plt.show()
-    valeurs_smoothed = valeurs #gaussian_filter1d(valeurs, sigma=30)
+    # Créer un DataFrame pour Plotly
+    df = pd.DataFrame({"Wind help": valeurs_smoothed, "Distance": range(len(valeurs))})
 
-    df = pd.DataFrame.from_dict(
-        {"Wind help": valeurs_smoothed, "Distance": range(len(valeurs))}
-    )
+    # Générer le graphique avec Plotly
     fig = px.line(
         df,
         x="Distance",
         y="Wind help",
-        labels={
-            "Wind help": "<b>Wind help</b> (normalized)",
-            "Distance": "<b>Distance</b>",
-        },
+        labels={"Wind help": "<b>Wind help</b> (normalized)", "Distance": "<b>Distance</b>"},
     )
-    fig.update_layout(width=626, 
-                        height=500, 
-                        paper_bgcolor="white",
-                        dragmode="pan",  # Définir le mode de déplacement par défaut sur "pan"
-                        )
-    fig.update_traces(
-        line_color="rgba(0, 0, 0, 0.6)",  # black with some transparency
+    fig.update_layout(
+        width=626,
+        height=500, 
+        font=dict(size=12, color='black'),  # Changez 'black' à une autre couleur si nécessaire
+        #paper_bgcolor="white",
+        plot_bgcolor="white",   # Fond blanc pour la zone du graphique
+        dragmode="pan",
+        margin=dict(l=30, r=30, t=30, b=30),  # Espacement autour du graphique
+        
+
+
+
     )
-    fig.add_hline(y=0)
+    fig.update_traces(line_color="rgba(0, 0, 0, 0.6)")
+
+    # Ajouter des formes et annotations
     height = 1.1
+    fig.add_hline(y=0)
     fig.add_shape(
         type="rect",
         x0=0,
@@ -171,7 +157,6 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
         y=0.5,
         text="<i>Tailwind helps you</i>",
         showarrow=False,
-        # yshift=10,
         font=dict(size=20, color="darkgreen"),
     )
     fig.add_annotation(
@@ -179,7 +164,6 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
         y=-0.5,
         text="<i>Headwind slows you down</i>",
         showarrow=False,
-        # yshift=10,
         font=dict(size=20, color="darkred"),
     )
     fig.add_shape(
@@ -192,28 +176,10 @@ def impact_vent_liste(wind_degrees, wind_speed, direction_list_degrees, race_nam
         fillcolor="red",
         opacity=0.1,
     )
-    #fig.write_html(f"PUBLIC/output/{race_name}/wind_help_{race_name}.html")
-    #fig.show()
-    #fig = go.Figure()
-    # Ajoutez vos tracés à fig ici
-    return fig  # Retournez fig au lieu de fig.show()
 
-    # fig, ax = plt.subplots()
-    # ax.plot(direction_list_degrees)
-    # plt.title("Strength of the wind")
-    # plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
-    # plt.ylabel("Sens race")
-    # plt.savefig(f"PUBLIC/output/{race_name}/sens_race_{race_name}.png", dpi=300, bbox_inches="tight")
-    # plt.show()
-    # plt.close()
+    return fig
 
-    # fig, ax = plt.subplots()
-    # ax.plot(valeursdeg)
-    # plt.title("Strength of the wind")
-    # plt.xlabel("Distance")  # erreur à réparer => pas par segments mais par kilomètres
-    # plt.ylabel("Sens race ")
-    # plt.savefig(f"PUBLIC/output/{race_name}/sens_diff_{race_name}.png", dpi=300, bbox_inches="tight")
-    # plt.show()
-    # plt.close()
 
-    # return valeurs, wind_speed
+
+
+

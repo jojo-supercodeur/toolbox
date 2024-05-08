@@ -74,7 +74,7 @@ st.title("Race Selection or Custom GPX Upload")
 
 # Sélectionner une course prédéfinie ou télécharger un fichier GPX
 selected_course = st.selectbox("Select a predefined course", [""] + list(predefined_courses))
-uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
+#uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
 
 # Variable pour stocker les points GPS
 points = []

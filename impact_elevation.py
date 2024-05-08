@@ -98,7 +98,7 @@ if selected_course == "Upload your own GPX":
             st.write("The uploaded GPX file doesn't contain a valid track.")
 
 # Sinon, (si une course prédéfinie est sélectionnée)
-else :
+elif selected_course in predefined_courses :
     gpx_path = os.path.join(base_path, f"gpx_race/{selected_course}.gpx")
     with open(gpx_path, "r") as gpx_file:
         gpx = gpxpy.parse(gpx_file)

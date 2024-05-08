@@ -68,7 +68,7 @@ races = {
 }
 
 # Interface utilisateur
-selected_race = st.selectbox("Choose your race motherfucker", list(races.keys()))
+selected_race = st.selectbox("Choose your race", list(races.keys()))
 
 
 

@@ -25,6 +25,18 @@ def calculate_performance_loss(base_time, temperature):
     
     return loss_minutes, loss_seconds, total_minutes + time_loss_minutes
 
+def calculate_performance_loss_flouris(base_time, temperature):
+    total_minutes = base_time.hour * 60 + base_time.minute + base_time.second / 60.0
+    loss_percentage= 1,2095136-0.22334*temperature+0.01031*temperature*temperature
+    time_loss_minutes = total_minutes * (loss_percentage / 100)
+
+
+    loss_minutes = int(time_loss_minutes)
+    loss_seconds = int((time_loss_minutes - loss_minutes) * 60)
+    
+    return loss_minutes, loss_seconds, total_minutes + time_loss_minutes
+    
+
 
 def get_weather_emoji(temperature):
     if temperature <= 0:
@@ -90,7 +102,7 @@ temperature = st.slider("Temperature (°C)", min_value=-20, max_value=40, value=
 base_time = datetime.time(hour=hours, minute=minutes, second=seconds)
 
 if st.button("Preview weather impact"):
-    loss_minutes, loss_seconds, total_time = calculate_performance_loss(base_time, temperature)
+    loss_minutes, loss_seconds, total_time = calculate_performance_loss_flouris(base_time, temperature)
     emoji = get_weather_emoji(temperature)
     # Formatage du temps total en heures, minutes et secondes
     total_hours = int(total_time // 60)

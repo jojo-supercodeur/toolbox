@@ -6,38 +6,19 @@ import os
 import json
 import gpxpy
 
+from troisD_graphic import (
+    create_3d_plot
+)
+
 from functions_race import (
     draw_wind_rose,
     impact_vent_liste,
-    generate_elevation_and_gradient_plot
+    generate_elevation_and_gradient_plot,
     )
 
 
+
 base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -116,6 +97,8 @@ if points:
 
 
 
+    fig = create_3d_plot(gpx_path)
+    st.plotly_chart(fig)
 
 
 

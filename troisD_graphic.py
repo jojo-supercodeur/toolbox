@@ -146,7 +146,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
         mode='markers',
         marker=dict(size=10, color=['green', 'red']),
         name='Start/End',
-        showscale=False,
+        #showscale=False,
     ))
 
 

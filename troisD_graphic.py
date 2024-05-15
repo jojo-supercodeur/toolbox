@@ -126,7 +126,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
     ))
 
     # Add north arrow
-    fig.add_trace(go.Scatter3d(
+    fig.add_trace(go.Surface(
         x=[longitude_max, longitude_max],
         y=[latitude_max, latitude_max + 0.01 * (latitude_max - latitude_min)],
         z=[min_elev - 10, min_elev - 10],
@@ -138,7 +138,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
     ))
 
     # Add a green marker at the start and a red marker at the end
-    fig.add_trace(go.Scatter3d(
+    fig.add_trace(go.Surface(
         x=[df['longitude'].iloc[0], df['longitude'].iloc[-1]],
         y=[df['latitude'].iloc[0], df['latitude'].iloc[-1]],
         z=[df['elevation'].iloc[0], df['elevation'].iloc[-1]],

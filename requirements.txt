@@ -13,3 +13,4 @@ streamlit==1.10.0
 #scipy==1.9.0  # Assurez-vous d'utiliser une version compatible avec vos autres packages
 absl-py==0.12.0
 plotly==5.20.0
+scipy==1.12.0

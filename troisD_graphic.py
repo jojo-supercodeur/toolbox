@@ -137,17 +137,15 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
         showlegend=False
     ))
 
-    # Add a thicker black line at the start and end points
+    # Add a green marker at the start and a red marker at the end
     fig.add_trace(go.Scatter3d(
         x=[df['longitude'].iloc[0], df['longitude'].iloc[-1]],
         y=[df['latitude'].iloc[0], df['latitude'].iloc[-1]],
         z=[df['elevation'].iloc[0], df['elevation'].iloc[-1]],
-        mode='markers+lines',
-        marker=dict(color='green', size=10),
-        line=dict(color='black', width=5),
+        mode='markers',
+        marker=dict(size=10, color=['green', 'red']),
         name='Start/End'
     ))
-    
 
 
 

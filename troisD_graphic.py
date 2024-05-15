@@ -40,7 +40,7 @@ def parse_gpx(file_path):
                     prev_point = segment.points[len(data['distance']) - 1]
                     dist = point.distance_3d(prev_point)
                     if dist != 0:
-                        data['gradient'].append(diff_elev / dist)
+                        data['gradient'].append((diff_elev / dist)*100)
                     else:
                         data['gradient'].append(0)
                     data['distance'].append(data['distance'][-1] + dist)
@@ -65,7 +65,7 @@ def parse_gpx(file_path):
 
     return pd.DataFrame(smoothed_data), min_elev
 
-def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
+def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
     df, min_elev = parse_gpx(gpx_file_path)
     fig = go.Figure()
 
@@ -78,7 +78,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
         [1, 'black']     # Very steep climbs
     ]
 
-    # Add the main track line
+    # Initialize with default elevation factor
     fig.add_trace(go.Scatter3d(
         x=df['longitude'],
         y=df['latitude'],
@@ -102,27 +102,58 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
         k=list(range(len(df), 2*len(df)-1)) + list(range(1, len(df))),
         intensity=df['gradient'].tolist() + df['gradient'].tolist(),
         colorscale=custom_colorscale,
-        opacity=0.5,
+        opacity=1,
         name='Walls'
     ))
 
-    # Add the background image as a surface
-    img = Image.open(img_path)
-    img = img.resize((2, 2))  # Resize to match the plot grid
-    img = np.array(img)
+     # Add a grid plane
+    longitude_min, longitude_max = df['longitude'].min(), df['longitude'].max()
+    latitude_min, latitude_max = df['latitude'].min(), df['latitude'].max()
+    grid_x, grid_y = np.meshgrid(
+        np.linspace(longitude_min, longitude_max, 10),
+        np.linspace(latitude_min, latitude_max, 10)
+    )
+    grid_z = np.full(grid_x.shape, min_elev - 10)
 
-    altitude = min_elev - 10
     fig.add_trace(go.Surface(
-        x=[[df['longitude'].min(), df['longitude'].max()], [df['longitude'].min(), df['longitude'].max()]],
-        y=[[df['latitude'].min(), df['latitude'].min()], [df['latitude'].max(), df['latitude'].max()]],
-        z=[[altitude, altitude], [altitude, altitude]],
-        surfacecolor=img[:, :, 0],  # Assuming the image is grayscale; for RGB use a different approach
-        cmin=0,
-        cmax=255,
-        colorscale='gray',
-        showscale=False,
-        opacity=1
+        x=grid_x, 
+        y=grid_y, 
+        z=grid_z, 
+        showscale=False, 
+        opacity=0.2, 
+        surfacecolor=np.zeros_like(grid_z),
+        colorscale='gray'
     ))
+
+    # Add north arrow
+    fig.add_trace(go.Scatter3d(
+        x=[longitude_max, longitude_max],
+        y=[latitude_max, latitude_max + 0.01 * (latitude_max - latitude_min)],
+        z=[min_elev - 10, min_elev - 10],
+        mode='lines+text',
+        line=dict(color='black', width=2),
+        text=["", "N"],
+        textposition='top center',
+        showlegend=False
+    ))
+
+    # Add a thicker black line at the start and end points
+    fig.add_trace(go.Scatter3d(
+        x=[df['longitude'].iloc[0], df['longitude'].iloc[-1]],
+        y=[df['latitude'].iloc[0], df['latitude'].iloc[-1]],
+        z=[df['elevation'].iloc[0], df['elevation'].iloc[-1]],
+        mode='markers+lines',
+        marker=dict(color='green', size=10),
+        line=dict(color='black', width=5),
+        name='Start/End'
+    ))
+    
+
+
+
+
+
+
 
     # Define animation steps for rotation
     frames = []
@@ -131,9 +162,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
             eye = dict(x=2*np.cos(np.radians(angle)), y=0, z=2*np.sin(np.radians(angle)))
         elif axis == 'y':
             eye = dict(x=0, y=2*np.cos(np.radians(angle)), z=2*np.sin(np.radians(angle)))
-        else:             
-            eye = dict(x=2*np.cos(np.radians(angle)), y=2*np.sin(np.radians(angle)),  z=2*np.sin(np.radians(angle_rot)))
-           # eye = dict(x=0, y=2*np.cos(np.radians(angle)), z=2*np.sin(np.radians(angle)))
+        else:
+            eye = dict(x=2*np.cos(np.radians(angle)), y=2*np.sin(np.radians(angle)), z=2*np.sin(np.radians(angle_rot)))
         frames.append(go.Frame(layout=dict(scene_camera_eye=eye)))
 
     fig.update_layout(
@@ -154,8 +184,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
             layer="below"
         )],
         scene=dict(
-            xaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible = False),
-            yaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible = False),
+            xaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible=False),
+            yaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible=False),
             zaxis=dict(title='', nticks=10, range=[min_elev - 10, df['elevation'].max()], showbackground=False, showspikes=False, spikesides=False, showticklabels=False)
         ),
         title='3D Course Profile',
@@ -164,12 +194,11 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
 
     fig.frames = frames
 
-    #return fig
-    fig.show() # for testing
-
-    #©©Cfig.show()
+    # For testing
+    #fig.show()
+    
+    return fig
 
 # Example usage
 gpx_file_path = 'gpx_race/UTMB.gpx'  # Replace with your GPX file path
-
 create_3d_plot(gpx_file_path, rotation_speed=5, axis='z')

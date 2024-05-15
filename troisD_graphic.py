@@ -178,15 +178,15 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_
                           method='animate',
                           args=[None, dict(frame=dict(duration=100, redraw=True), fromcurrent=True, mode='immediate')])]
         )],
-        images=[dict(
-            source=img_path,
-            xref="paper", yref="paper",
-            x=0, y=1,
-            sizex=1, sizey=1,
-            sizing="stretch",
-            opacity=1,
-            layer="below"
-        )],
+        # images=[dict(
+        #     source=img_path,
+        #     xref="paper", yref="paper",
+        #     x=0, y=1,
+        #     sizex=1, sizey=1,
+        #     sizing="stretch",
+        #     opacity=1,
+        #     layer="below"
+        # )],
         scene=dict(
             xaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible=False),
             yaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible=False),

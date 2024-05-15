@@ -69,7 +69,7 @@ def parse_gpx(file_path):
 
     return pd.DataFrame(smoothed_data), min_elev
 
-def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
+def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_path=1):
     df, min_elev = parse_gpx(gpx_file_path)
     fig = go.Figure()
 
@@ -205,4 +205,4 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
 
 # Example usage
 gpx_file_path = 'gpx_race/UTMB.gpx'  # Replace with your GPX file path
-create_3d_plot(gpx_file_path, rotation_speed=5, axis='z',ima_path= path_de_limage)
+create_3d_plot(gpx_file_path, rotation_speed=5, axis='z',img_path= path_de_limage)

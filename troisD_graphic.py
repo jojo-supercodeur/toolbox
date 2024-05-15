@@ -10,7 +10,7 @@ import os
 # Load the image
 base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
 path_de_limage = "logo_enduraw.png"
-path_de_limage = os.path.join(base_path, f"{path_de_limage}")
+path_de_limage = os.path.join(base_path, f"/{path_de_limage}")
 
 def parse_gpx(file_path):
     # Parse the GPX file

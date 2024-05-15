@@ -65,7 +65,7 @@ def parse_gpx(file_path):
 
     return pd.DataFrame(smoothed_data), min_elev
 
-def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z'):
+def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot = 15):
     df, min_elev = parse_gpx(gpx_file_path)
     fig = go.Figure()
 
@@ -131,8 +131,9 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z'):
             eye = dict(x=2*np.cos(np.radians(angle)), y=0, z=2*np.sin(np.radians(angle)))
         elif axis == 'y':
             eye = dict(x=0, y=2*np.cos(np.radians(angle)), z=2*np.sin(np.radians(angle)))
-        else:
-            eye = dict(x=2*np.cos(np.radians(angle)), y=2*np.sin(np.radians(angle)), z=0)
+        else:             
+            eye = dict(x=2*np.cos(np.radians(angle)), y=2*np.sin(np.radians(angle)),  z=2*np.sin(np.radians(angle_rot)))
+           # eye = dict(x=0, y=2*np.cos(np.radians(angle)), z=2*np.sin(np.radians(angle)))
         frames.append(go.Frame(layout=dict(scene_camera_eye=eye)))
 
     fig.update_layout(
@@ -153,8 +154,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z'):
             layer="below"
         )],
         scene=dict(
-            xaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False),
-            yaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False),
+            xaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible = False),
+            yaxis=dict(title='', showbackground=False, showspikes=False, spikesides=False, showticklabels=False, visible = False),
             zaxis=dict(title='', nticks=10, range=[min_elev - 10, df['elevation'].max()], showbackground=False, showspikes=False, spikesides=False, showticklabels=False)
         ),
         title='3D Course Profile',
@@ -163,7 +164,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z'):
 
     fig.frames = frames
 
-    return fig
+    #return fig
+    fig.show() # for testing
 
     #©©Cfig.show()
 

@@ -250,7 +250,7 @@ def generate_elevation_and_gradient_plot(gpx, threshold):
     gradient = [g if g <= 100 else 0 for g in gradient]
 
     # Lisser le gradient avec un filtre
-    gradient_smooth = np.convolve(gradient, np.ones(10) / 10, mode='same')
+    gradient_smooth = np.convolve(gradient, np.ones(30) / 30, mode='same')
 
     # Tracer le profil d'altitude et le gradient en utilisant Plotly
     fig = go.Figure()

@@ -97,7 +97,7 @@ if points:
 
 
 
-    fig = create_3d_plot(gpx_path)
+    fig = create_3d_plot(gpx)
     st.plotly_chart(fig)
 
 

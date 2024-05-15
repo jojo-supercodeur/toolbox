@@ -12,10 +12,10 @@ base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du scr
 path_de_limage = "logo_enduraw.png"
 path_de_limage = os.path.join(base_path, f"/{path_de_limage}")
 
-def parse_gpx(file_path):
+def parse_gpx(gpx):
     # Parse the GPX file
-    with open(file_path, 'r') as gpx_file:
-        gpx = gpxpy.parse(gpx_file)
+    #with open(file_path, 'r') as gpx_file:
+        #gpx = gpxpy.parse(gpx_file)
 
     data = {
         'latitude': [],

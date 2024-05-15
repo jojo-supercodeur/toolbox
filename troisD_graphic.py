@@ -135,7 +135,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
         line=dict(color='black', width=2),
         text=["", "N"],
         textposition='top center',
-        #showlegend=False
+        showlegend=False
     ))
 
     # Add a green marker at the start and a red marker at the end
@@ -146,7 +146,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
         mode='markers',
         marker=dict(size=10, color=['green', 'red'], showscale = False),
         name='Start/End',
-        #showscale=False,
+        showlegend=False,
     ))
 
 

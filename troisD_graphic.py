@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 from PIL import Image
 from scipy.interpolate import interp1d
+from plotly.graph_objs import Scatter3d
 
 # Load the image
 img_path = "logo_enduraw.png"

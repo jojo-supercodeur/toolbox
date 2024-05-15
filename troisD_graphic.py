@@ -144,7 +144,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
         y=[df['latitude'].iloc[0], df['latitude'].iloc[-1]],
         z=[df['elevation'].iloc[0], df['elevation'].iloc[-1]],
         mode='markers',
-        marker=dict(size=10, color=['green', 'red']),
+        marker=dict(size=10, color=['green', 'red'], showscale = False),
         name='Start/End',
         #showscale=False,
     ))

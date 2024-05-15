@@ -204,5 +204,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_
     return fig
 
 # Example usage
-gpx_file_path = 'gpx_race/UTMB.gpx'  # Replace with your GPX file path
-create_3d_plot(gpx_file_path, rotation_speed=5, axis='z',img_path= path_de_limage)
+#gpx_file_path = 'gpx_race/UTMB.gpx'  # Replace with your GPX file path
+
+
+#create_3d_plot(gpx_file_path, rotation_speed=5, axis='z',img_path= path_de_limage)

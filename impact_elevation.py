@@ -86,10 +86,10 @@ elif selected_course in predefined_courses :
 # Si l'une des deux conditions est remplie, on passe à l'étape suivante
 if points:
     # Exemple d'étape suivante : afficher les premiers points
-    st.write(f"First 5 points: {points[:5]}")
+    #st.write(f"First 5 points: {points[:5]}")
 
-    st.write(gpx_path)
-    st.write(gpx)
+    #st.write(gpx_path)
+    #st.write(gpx)
 
     fig = generate_elevation_and_gradient_plot(gpx, threshold)
     st.plotly_chart(fig)

@@ -5,9 +5,12 @@ import numpy as np
 from PIL import Image
 from scipy.interpolate import interp1d
 from plotly.graph_objs import Scatter3d
+import os
 
 # Load the image
-img_path = "logo_enduraw.png"
+base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
+path_de_limage = "logo_enduraw.png"
+path_de_limage = os.path.join(base_path, f"{path_de_limage}")
 
 def parse_gpx(file_path):
     # Parse the GPX file
@@ -90,7 +93,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
             colorscale='Viridis',
             width=2
         ),
-        name='Track'
+        name='Track',
+        showlegend= False,
     ))
 
     # Add the "walls" to the base (altitude 0)
@@ -201,4 +205,4 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15):
 
 # Example usage
 gpx_file_path = 'gpx_race/UTMB.gpx'  # Replace with your GPX file path
-create_3d_plot(gpx_file_path, rotation_speed=5, axis='z')
+create_3d_plot(gpx_file_path, rotation_speed=5, axis='z',ima_path= path_de_limage)

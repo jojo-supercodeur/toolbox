@@ -106,8 +106,8 @@ if selected_course != "Choose your race" :
     st.plotly_chart(fig_7)
 
 
-    st.write("Contact me if you want other analyses")
-    st.write("Contact me if you want other analyses")
+    st.write("Soon on Maurten Website - Contact me if you want other analyses")
+  
 
 
 

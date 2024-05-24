@@ -630,7 +630,10 @@ def create_country_statistics_table(file_path):
         male_count = country_gender[country]['M']
         female_count = country_gender[country]['W']
         #parity = f"{male_count}M / {female_count}F"
-        parity = round(male_count/(male_count+female_count),2)
+        if male_count+female_count != 0:
+            parity = round(male_count/(male_count+female_count),2)
+        else :
+            parity = 1
         
         country_statistics.append({
             "Country": country,

@@ -679,7 +679,7 @@ def plot_name_speed_distribution(file_path):
     # Extraire les prénoms et leurs temps de course
     name_times = {}
     for key, value in data.items():
-        name = value["Participant Details"]["Name"]
+        name = value["Participant Details"]["Surname"]
         time_str = value["Totals"]["Time Total (net)"]
         total_minutes = convert_time_to_minutes(time_str)
         

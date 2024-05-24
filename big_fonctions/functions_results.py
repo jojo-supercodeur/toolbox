@@ -531,7 +531,7 @@ def plot_nationality_distribution(file_path):
     total_runners = sum(nationality_counts.values())
     
     # Séparer les nationalités représentant moins de 5% des participants
-    major_nationalities = {k: v for k, v in nationality_counts.items() if (v / total_runners) >= 0.05}
+    major_nationalities = {k: v for k, v in nationality_counts.items() if (v / total_runners) >= 0.03}
     other_nationalities_count = total_runners - sum(major_nationalities.values())
     
     # Ajouter la catégorie "Other nationalities"
@@ -691,7 +691,7 @@ def plot_name_speed_distribution(file_path):
     name_statistics = []
     for name, times in name_times.items():
         count = len(times)
-        if count >= 30:
+        if count >= 150:
             avg_time = sum(times) / count
             name_statistics.append({
                 "Name": name,

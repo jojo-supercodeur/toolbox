@@ -105,7 +105,7 @@ if selected_course != "Choose your race to analyse !" :
 
     elif selected_course == "London 2024 - Mass results" :
         filepath = os.path.join(base_path, "results_race/sorted_London_2024.json")
-        error_gender = "I struggled to scrap all the informations so the sex feature is not available rn"
+        #error_gender = "I struggled to scrap all the informations so the sex feature is not available rn"
         error_elite = "avalaible only for mass results"
 
 

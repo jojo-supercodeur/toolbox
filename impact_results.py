@@ -93,6 +93,8 @@ if selected_course != "Choose your race to analyse !" :
 
     elif selected_course == "Boston Marathon 2023" :
         filepath = os.path.join(base_path, "results_race/sorted_Boston_2023.json")
+        error_nationality ="Nationality not available this year"
+        
 
     elif selected_course == "Boston Marathon 2024" :
         filepath = os.path.join(base_path, "results_race/sorted_Boston_2024.json")

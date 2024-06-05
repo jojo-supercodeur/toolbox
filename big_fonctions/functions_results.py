@@ -604,8 +604,9 @@ def create_country_statistics_table(file_path):
     
     # Parcourir les données pour extraire les informations nécessaires
     for key, value in data.items():
-        surname = value["Participant Details"]["Surname"]
-        nationality = surname[surname.find("(")+1:surname.find(")")]
+        #surname = value["Participant Details"]["Surname"]
+        #nationality = surname[surname.find("(")+1:surname.find(")")]
+        nationality = value["Participant Details"]["Nationality"]
         
         if nationality not in country_counts:
             country_counts[nationality] = 0

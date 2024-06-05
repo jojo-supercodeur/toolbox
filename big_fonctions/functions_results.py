@@ -442,7 +442,7 @@ def plot_split_coefficient(file_path):
         second_half_time = None
         
         for split in splits:
-            if split["Split"] == "HALF":
+            if split["Split"] == "HALF" or split["Split"] == "Half":
                 first_half_time = convert_time_to_minutes(split["Time"])
             elif split["Split"] == "Finish Net" and first_half_time is not None:
                 second_half_time = convert_time_to_minutes(split["Time"])

@@ -121,12 +121,13 @@ if selected_course != "Choose your race to analyse !" :
     fig_2 = plot_pourcentage_finish(filepath, total_minutes)
     st.plotly_chart(fig_2)
 
-    if error_elite == "RAS":
-        st.write("Top 10 pacing evolution")
-        fig_3 = plot_top10_evolution(filepath, '02:04:00')
-        st.plotly_chart(fig_3)
-    else : 
-        st.write("prouuuuuut")
+
+    st.write("Top 10 pacing evolution")
+    fig_3 = plot_top10_evolution(filepath, '02:04:00')
+    st.plotly_chart(fig_3)
+    if error_elite != "RAS":
+        st.write("leaders fot the mass event")
+
 
     st.write("Negativ/Positiv split analysis according to level")
     fig_4 = plot_split_coefficient(filepath)

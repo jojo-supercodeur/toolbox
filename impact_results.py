@@ -36,7 +36,7 @@ predefined_courses = {
     "Boston Marathon 2022",
     "Boston Marathon 2023",
     "Boston Marathon 2024",
-    "Chicago 2023"
+    "Chicago 2023",
     "London 2024 - Mass results",
 }
 

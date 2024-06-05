@@ -307,7 +307,12 @@ def convert_time_to_minutes(time_str):
     h, m, s = map(int, time_str.split(':'))
     return h * 60 + m + s / 60
 
+import json
+import plotly.graph_objects as go
 
+def convert_time_to_minutes(time_str):
+    h, m, s = map(int, time_str.split(':'))
+    return h * 60 + m + s / 60
 
 def plot_top10_evolution(file_path, reference_time):
     # Charger les données JSON
@@ -319,12 +324,21 @@ def plot_top10_evolution(file_path, reference_time):
     
     # Extraire les temps de passage des coureurs du top 10
     top10_ids = sorted(data.keys(), key=lambda x: int(data[x]['Totals']['Place (Total)']))[:10]
-    
-    # Points de passage en kilomètres et miles
-    splits_labels = ["5K", "10K", "15K", "20K", "HALF", "25K", "30K", "20 Miles", "21 Miles", "35K", "40K", "25.2 Miles", "Finish Net"]
-    splits_distances = [5, 10, 15, 20, 21.1, 25, 30, 32.1869, 33.7962, 35, 40, 40.555, 42.195]  # en kilomètres et miles
 
     fig = go.Figure()
+
+    # Déterminer les splits disponibles et leurs distances
+    splits_labels = []
+    splits_distances = []
+    sample_splits = data[top10_ids[0]]["Splits"]
+
+    for split in sample_splits:
+        split_label = split["Split"]
+        splits_labels.append(split_label)
+        if 'K' in split_label:
+            splits_distances.append(float(split_label.replace('K', '')))
+        elif 'Miles' in split_label:
+            splits_distances.append(float(split_label.replace(' Miles', '')) * 1.60934)  # Convertir les miles en kilomètres
 
     # Tracer la courbe de référence
     reference_distances = [0] + splits_distances
@@ -340,9 +354,10 @@ def plot_top10_evolution(file_path, reference_time):
         time_diffs = [0]  # Ajouter le point 0 pour chaque coureur
         
         for split in runner_splits:
-            if split["Split"] in splits_labels:
+            split_label = split["Split"]
+            if split_label in splits_labels:
                 split_time = convert_time_to_minutes(split["Time"])
-                distance = splits_distances[splits_labels.index(split["Split"])]
+                distance = splits_distances[splits_labels.index(split_label)]
                 distances.append(distance)
                 # Calculer l'écart par rapport au temps de référence lissé sur la distance parcourue
                 expected_time = (distance / 42.195) * reference_minutes

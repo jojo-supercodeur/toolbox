@@ -80,7 +80,7 @@ selected_course = st.selectbox("Select the edition of Boston Marathon", ["Choose
 #uploaded_file = st.file_uploader("Or upload a GPX file", type=["gpx"])
 
 
-if selected_course != "Choose your race to analyse" :
+if selected_course != "Choose your race to analyse !" :
 
     if selected_course == "Boston Marathon 2022" :
         filepath = os.path.join(base_path, "results_race/sorted_Boston_2022.json")

@@ -172,14 +172,13 @@ def plot_time_distribution_sex(file_path):
 
 
 
-
-
 import json
 import plotly.graph_objects as go
 import numpy as np
-import json
-import plotly.graph_objects as go
-import numpy as np
+
+def convert_time_to_minutes(time_str):
+    h, m, s = map(int, time_str.split(':'))
+    return h * 60 + m + s / 60
 
 def plot_pourcentage_finish(file_path, additional_time=None):
     # Charger les données JSON
@@ -190,8 +189,7 @@ def plot_pourcentage_finish(file_path, additional_time=None):
     finish_times = []
     for key, value in data.items():
         time_str = value["Totals"]["Time Total (net)"]
-        h, m, s = map(int, time_str.split(':'))
-        total_minutes = int(h * 60 + m + s / 60)
+        total_minutes = convert_time_to_minutes(time_str)
         finish_times.append(total_minutes)
     
     # Trier les temps de finish
@@ -207,21 +205,20 @@ def plot_pourcentage_finish(file_path, additional_time=None):
     # Ajouter la courbe du pourcentage cumulatif des finishers
     fig.add_trace(go.Scatter(x=finish_times, y=cumulative_percentages, mode='lines', name='Cumulative Percentage'))
     
+    # Trouver les temps correspondant à 25%, 50%, 75%
+    percentiles = [25, 50, 75]
+    percentile_times = [finish_times[int(p / 100 * total_finishers) - 1] for p in percentiles]
+    
     # Ajouter les lignes horizontales pour 25%, 50%, 75%
-    for percent in [25, 50, 75]:
+    for i, percent in enumerate(percentiles):
         fig.add_shape(
             type="line",
             x0=0,
             y0=percent,
             x1=percentile_times[i],
-            #x1=max(finish_times),
             y1=percent,
             line=dict(color="red", width=2, dash="dash"),
         )
-    
-    # Trouver les temps correspondant à 25%, 50%, 75%
-    percentiles = [25, 50, 75]
-    percentile_times = [finish_times[int(p / 100 * total_finishers) - 1] for p in percentiles]
     
     # Ajouter les lignes verticales pour les temps correspondants
     for i, time in enumerate(percentile_times):
@@ -292,7 +289,6 @@ def plot_pourcentage_finish(file_path, additional_time=None):
 # Utilisation de la fonction
 # fig = plot_pourcentage_finish('path_to_your_file.json', additional_time=200)
 # fig.show()
-
 
 
 

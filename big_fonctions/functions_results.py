@@ -525,7 +525,8 @@ def plot_nationality_distribution(file_path):
     nationalities = []
     for key, value in data.items():
         surname = value["Participant Details"]["Surname"]
-        nationality = surname[surname.find("(")+1:surname.find(")")]
+        #nationality = surname[surname.find("(")+1:surname.find(")")]
+        nationality = value["Participant Details"]["Nationality"]
         nationalities.append(nationality)
     
     # Compter les occurrences de chaque nationalité

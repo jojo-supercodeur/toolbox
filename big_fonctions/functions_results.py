@@ -303,10 +303,6 @@ def plot_pourcentage_finish(file_path, additional_time=None):
 
 
 
-def convert_time_to_minutes(time_str):
-    h, m, s = map(int, time_str.split(':'))
-    return h * 60 + m + s / 60
-
 import json
 import plotly.graph_objects as go
 
@@ -324,21 +320,12 @@ def plot_top10_evolution(file_path, reference_time):
     
     # Extraire les temps de passage des coureurs du top 10
     top10_ids = sorted(data.keys(), key=lambda x: int(data[x]['Totals']['Place (Total)']))[:10]
+    
+    # Points de passage en kilomètres
+    splits_labels = ["5K", "10K", "15K", "20K", "HALF", "25K", "30K", "35K", "40K", "Finish Net"]
+    splits_distances = [5, 10, 15, 20, 21.1, 25, 30, 35, 40, 42.195]  # en kilomètres
 
     fig = go.Figure()
-
-    # Déterminer les splits disponibles et leurs distances
-    splits_labels = []
-    splits_distances = []
-    sample_splits = data[top10_ids[0]]["Splits"]
-
-    for split in sample_splits:
-        split_label = split["Split"]
-        splits_labels.append(split_label)
-        if 'K' in split_label:
-            splits_distances.append(float(split_label.replace('K', '')))
-        elif 'Miles' in split_label:
-            splits_distances.append(float(split_label.replace(' Miles', '')) * 1.60934)  # Convertir les miles en kilomètres
 
     # Tracer la courbe de référence
     reference_distances = [0] + splits_distances

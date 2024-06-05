@@ -97,9 +97,9 @@ def plot_time_distribution_sex(file_path):
         time_str = value["Totals"]["Time Total (net)"]
         h, m, s = map(int, time_str.split(':'))
         total_minutes = int(h * 60 + m + s / 60)
-        if value["Participant Details"]["Sex"] == "M":
+        if value["Participant Details"]["Sex"] == "M" or value["Participant Details"]["Sex"] == "Male" :
             finish_times_men.append(total_minutes)
-        elif value["Participant Details"]["Sex"] == "W":
+        elif value["Participant Details"]["Sex"] == "W" or value["Participant Details"]["Sex"] == "Female":
             finish_times_women.append(total_minutes)
     
     # Créer les histogrammes des temps d'arrivée

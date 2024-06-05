@@ -213,7 +213,8 @@ def plot_pourcentage_finish(file_path, additional_time=None):
             type="line",
             x0=0,
             y0=percent,
-            x1=max(finish_times),
+            x1=percentile_times[i],
+            #x1=max(finish_times),
             y1=percent,
             line=dict(color="red", width=2, dash="dash"),
         )

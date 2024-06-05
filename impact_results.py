@@ -35,7 +35,8 @@ base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du scr
 predefined_courses = {
     "Boston Marathon 2022",
     "Boston Marathon 2023",
-    "Boston Marathon 2024"
+    "Boston Marathon 2024",
+    "London 2024 - Mass results",
 }
 
 
@@ -87,21 +88,33 @@ if selected_course != "Choose your race" :
         filepath = os.path.join(base_path, "results_race/sorted_Boston_2023.json")
     elif selected_course == "Boston Marathon 2024" :
         filepath = os.path.join(base_path, "results_race/sorted_Boston_2024.json")
+    elif selected_course == "London 2024 - Mass results" :
+        filepath = os.path.join(base_path, "results_race/sorted_Boston_2024.json")
+        error_gender = "I struggled to scrap non binary runner so the sex feature is not available rn"
+        error_elite = "avalaible only for mass results"
 
     fig_1 = plot_time_distribution(filepath)
+
     st.plotly_chart(fig_1)
+    st.write("")
     fig_11 = plot_time_distribution_sex(filepath)
     st.plotly_chart(fig_11)
+
     fig_2 = plot_pourcentage_finish(filepath, total_minutes)
     st.plotly_chart(fig_2)
+
     fig_3 = plot_top10_evolution(filepath, '02:08:00')
     st.plotly_chart(fig_3)
+
     fig_4 = plot_split_coefficient(filepath)
     st.plotly_chart(fig_4)
+
     fig_5 = plot_nationality_distribution(filepath)
     st.plotly_chart(fig_5)
+
     df_6 = create_country_statistics_table(filepath)
     st.dataframe(df_6)
+
     fig_7 = plot_name_speed_distribution(filepath)
     st.plotly_chart(fig_7)
 

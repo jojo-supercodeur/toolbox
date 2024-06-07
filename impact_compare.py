@@ -51,14 +51,19 @@ with col2:
 
 if race1 != "Choose your race" and race2 != "Choose the race to compare":
     race1_stats = data[race1]
+    logo_path1 = os.path.join(base_path, f"logo_race/{race1}.png")
     race2_stats = data[race2]
+    logo_path2 = os.path.join(base_path, f"logo_race/{race2}.png")
 
     # Affichage des titres des courses
     col1, col2 = st.columns(2)
     with col1:
         st.header(f"{race1}")
+        st.image(logo_path1, width=100)
+
     with col2:
         st.header(f"{race2}")
+        st.image(logo_path2, width=100)
 
     # Affichage des statistiques
     for stat1, value1 in race1_stats.items():
@@ -66,7 +71,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         col1, col2 = st.columns(2)
         with col1:
             if isinstance(value1, int):
-                st.markdown(f"<h1 style='text-align: center;'>{value1}</h1>", unsafe_allow_html=True)
+                st.markdown(f"<h1 style='text-align: center; font-size: 80px;'>{value1}</h1>", unsafe_allow_html=True)
             else:
                 st.markdown(f"<h2 style='text-align: center;'>{value1}</h2>", unsafe_allow_html=True)
                 

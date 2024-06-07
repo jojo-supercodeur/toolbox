@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import os
 import json
 import gpxpy
+import streamlit.components.v1 as components  # Importer le module components
 
 from big_fonctions.functions_results import (
     plot_time_distribution,
@@ -14,7 +15,13 @@ from big_fonctions.functions_results import (
     plot_split_coefficient,
     plot_nationality_distribution,
     create_country_statistics_table,
-    plot_name_speed_distribution
+    plot_name_speed_distribution,
+    plot_time_distribution_compare,
+    load_html_map
+)
+
+from troisD_graphic import (
+    create_3d_plot
 )
 
 # Définir une fonction pour convertir les minutes en HH:MM
@@ -69,6 +76,13 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     logo_path1 = os.path.join(base_path, f"logo_race/{race1}.png")
     race2_stats = data[race2]
     logo_path2 = os.path.join(base_path, f"logo_race/{race2}.png")
+    html_file_map1 = os.path.join(base_path,f"map_race/map_{race1}.html")
+    html_file_map2 = os.path.join(base_path,f"map_race/map_{race2}.html")
+    gpx1 = os.path.join(base_path,f"gpx_race/map_{race2}.gpx")
+    gpx2 = os.path.join(base_path,f"gpx_race/map_{race2}.gpx")
+    results_filepath1 = os.path.join(base_path, "results_race/sorted_Boston_2023.json")
+    results_filepath2 = os.path.join(base_path, "results_race/sorted_London_2024.json")
+
 
     # Affichage des titres des courses
     col1, col2 = st.columns(2)
@@ -148,6 +162,36 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     with col3:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
 
+
+
+
+    #map of the course 
+    st.write("The map of the race :")
+
+
+    col1, col2 = st.columns(2)
+    html_content_map1 = load_html_map(html_file_map1)
+    html_content_map2 = load_html_map(html_file_map2)
+
+    with col1 : components.html(html_content_map1, height=360)  # Utiliser components.html pour intégrer la carte
+    with col2 : components.html(html_content_map2, height=360)  # Utiliser components.html pour intégrer la carte
+
+
+
+
+    #elevation 3D of the course 
+    st.write("The 3D elevation map of the race :")
+
+
+    col1, col2 = st.columns(2)
+
+    fig1 = create_3d_plot(gpx1)
+    fig2 = create_3d_plot(gpx2)
+    with col1 : st.plotly_chart(fig1)
+    with col2 : st.plotly_chart(fig2)
+
+
+
     # Elevation of the race
     st.write("The positive elevation is :")
     col1, col2, col3 = st.columns([1, 0.05, 1])
@@ -159,6 +203,12 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     with col3:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_elevation}</h1>", unsafe_allow_html=True)
         st.markdown(f"<p style='text-align: center;'>{message2_elevation}</p>", unsafe_allow_html=True)
+
+
+    st.write("The comparison of distribution")
+    fig_1 = plot_time_distribution(results_filepath1,results_filepath2)
+    st.plotly_chart(fig_1)
+    
 
     # Temperature
     st.write("The mean temperature the last 10 years was :")

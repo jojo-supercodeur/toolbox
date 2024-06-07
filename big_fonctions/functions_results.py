@@ -717,3 +717,113 @@ def plot_name_speed_distribution(file_path):
 # Utilisation de la fonction
 # fig = plot_name_speed_distribution('path_to_your_file.json')
 # fig.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Fonction pour charger et afficher le fichier HTML de la carte
+def load_html_map(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    return html_content
+
+
+
+
+
+
+
+
+import json
+import plotly.graph_objects as go
+
+def plot_time_distribution_compare(file_path1, file_path2):
+    # Charger les données JSON des deux fichiers
+    with open(file_path1, 'r') as file:
+        data1 = json.load(file)
+    with open(file_path2, 'r') as file:
+        data2 = json.load(file)
+
+    # Extraire les temps d'arrivée et les convertir en minutes pour les deux fichiers
+    def extract_finish_times(data):
+        finish_times = []
+        for key, value in data.items():
+            time_str = value["Totals"]["Time Total (net)"]
+            h, m, s = map(int, time_str.split(':'))
+            total_minutes = int(h * 60 + m + s / 60)
+            finish_times.append(total_minutes)
+        return finish_times
+
+    finish_times1 = extract_finish_times(data1)
+    finish_times2 = extract_finish_times(data2)
+
+    # Créer des histogrammes des temps d'arrivée pour les deux fichiers
+    fig = go.Figure()
+
+    fig.add_trace(go.Histogram(
+        x=finish_times1,
+        xbins=dict(size=1),
+        name='Race 1',
+        marker_color='blue',
+        opacity=0.7
+    ))
+
+    fig.add_trace(go.Histogram(
+        x=finish_times2,
+        xbins=dict(size=1),
+        name='Race 2',
+        marker_color='orange',
+        opacity=0.7
+    ))
+
+    # Définir les barrières mythiques en minutes
+    barriers = [180, 210, 240]  # 3h, 3h30, 4h en minutes
+
+    # Ajouter des lignes verticales pour les barrières
+    shapes = [
+        dict(
+            type="line",
+            x0=barrier,
+            y0=0,
+            x1=barrier,
+            y1=1,
+            xref='x',
+            yref='paper',
+            line=dict(color="red", width=2)
+        ) for barrier in barriers
+    ]
+    fig.update_layout(shapes=shapes)
+
+    # Définir les tickvals et ticktext pour l'axe x
+    tickvals = list(range(0, int(max(finish_times1 + finish_times2)) + 1, 30))
+    ticktext = [f"{int(t // 60):02d}:{int(t % 60):02d}" for t in tickvals]
+    fig.update_layout(
+        xaxis=dict(
+            tickmode='array',
+            tickvals=tickvals,
+            ticktext=ticktext
+        ),
+        title="Distribution of runners based on finish time",
+        xaxis_title="Finish time (HH:MM)",
+        yaxis_title="Number of runners",
+        bargap=0.2,
+    )
+    
+    # Afficher le graphique
+    return fig

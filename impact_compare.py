@@ -41,7 +41,7 @@ st.markdown(
     <style>
     .divider {
         height: 100%;
-        width: 1px;
+        width: 10px;
         background-color: #CCCCCC;
         margin: 0 auto;
     }
@@ -74,11 +74,11 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     col1, col2 = st.columns(2)
     with col1:
         st.header(f"{race1}")
-        st.image(logo_path1, width=200, use_column_width='always')
+        st.image(logo_path1, width=100, use_column_width='always')
 
     with col2:
         st.header(f"{race2}")
-        st.image(logo_path2, width=200, use_column_width='always')
+        st.image(logo_path2, width=100, use_column_width='always')
 
     # Définir la taille de police
     font_size_large = 100  # Vous pouvez ajuster cette valeur selon vos préférences
@@ -150,7 +150,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     # Elevation of the race
     st.write("The positive elevation is :")
-    col1, col2, col3 = st.columns([1, 0.5, 1])
+    col1, col2, col3 = st.columns([1, 0.05, 1])
     with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_elevation}</h1>", unsafe_allow_html=True)
         st.markdown(f"<p style='text-align: center;'>{message1_elevation}</p>", unsafe_allow_html=True)

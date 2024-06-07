@@ -74,12 +74,12 @@ def display_race_stats(race1, race2, data):
     col1, col2 = st.columns(2)
 
     with col1:
-        st.header(f"Course: {race1}")
+        st.header(f"{race1}")
         for stat, value in race1_stats.items():
             st.write(f"{stat}: {value}")
 
     with col2:
-        st.header(f"Course: {race2}")
+        st.header(f"{race2}")
         for stat, value in race2_stats.items():
             st.write(f"{stat}: {value}")
 
@@ -96,11 +96,14 @@ race_options = list(data.keys())
 col1, col2 = st.columns(2)
 
 with col1:
-    race1 = st.selectbox("Choose your race", race_options)
+    race1 = st.selectbox("Choose your race", ["Choose your race"] + race_options)
 
 with col2:
 
-    race2 = st.selectbox("Choose the race to compare", race_options)
+    race2 = st.selectbox("Choose the race to compare", ["Choose the race to compare"] + race_options)
+
+
+if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
 
 
@@ -109,21 +112,22 @@ with col2:
 
 
 
-# Afficher les statistiques des deux courses
-display_race_stats(race1, race2, data)
 
-# Espace pour les graphiques
-st.header("Comparaison Graphique")
-st.write("Graphique des temps des finishers des deux courses à venir...")
+    # Afficher les statistiques des deux courses
+    display_race_stats(race1, race2, data)
 
-# Placeholder pour les fonctions de graphique
-# Exemples de fonctions de graphique que vous pouvez ajouter
-# def plot_finisher_times(race1_times, race2_times):
-#     # code pour tracer les temps des finishers
-#     pass
+    # Espace pour les graphiques
+    #st.header("Comparaison Graphique")
+    #st.write("Graphique des temps des finishers des deux courses à venir...")
 
-# if 'finisher_times' in data[race1] and 'finisher_times' in data[race2]:
-#     plot_finisher_times(data[race1]['finisher_times'], data[race2]['finisher_times'])
+    # Placeholder pour les fonctions de graphique
+    # Exemples de fonctions de graphique que vous pouvez ajouter
+    # def plot_finisher_times(race1_times, race2_times):
+    #     # code pour tracer les temps des finishers
+    #     pass
+
+    # if 'finisher_times' in data[race1] and 'finisher_times' in data[race2]:
+    #     plot_finisher_times(data[race1]['finisher_times'], data[race2]['finisher_times'])
 
 
 

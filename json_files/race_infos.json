@@ -1,16 +1,23 @@
 {
-    "Course 1": {
-      "Distance": "10 km",
-      "Dénivelé": "200 m",
-      "Nombre de participants": 300,
-      "Température": "15°C",
+    "Boston Marathon": {
+      "Distance": "42 km",
+      "Elevation": "200 m",
+      "Finishers": 300,
+      "Temperature": "15°C",
       "finisher_times": [3600, 3700, 3800]
     },
-    "Course 2": {
+    "London Marathon": {
+        "Distance": "15 km",
+        "Elevation": "300 m",
+        "Finishers": 450,
+        "Temperature": "18°C",
+        "finisher_times": [4500, 4600, 4700]
+    },
+    "Chicago Marathon": {
       "Distance": "15 km",
-      "Dénivelé": "300 m",
-      "Nombre de participants": 450,
-      "Température": "18°C",
+      "Elevation": "300 m",
+      "Finishers": 450,
+      "Temperature": "18°C",
       "finisher_times": [4500, 4600, 4700]
     }
   }

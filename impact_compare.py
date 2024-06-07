@@ -52,9 +52,7 @@ predefined_courses = {
 
 
 
-# Interface utilisateur
-st.title("Compare the majors")
-st.write("First draft, soon on Maurten website !")
+
 
 
 
@@ -88,13 +86,28 @@ def display_race_stats(race1, race2, data):
 # Charger les données
 data = load_data()
 
-# Interface utilisateur Streamlit
-st.title("Comparaison des Statistiques de Courses")
+# Interface utilisateur
+st.title("Compare the majors")
+st.write("First draft, soon on Maurten website !")
+
 race_options = list(data.keys())
 
-# Sélection des courses
-race1 = st.selectbox("Sélectionnez la première course", race_options)
-race2 = st.selectbox("Sélectionnez la deuxième course", race_options)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    race1 = st.selectbox("Choose your race", race_options)
+
+with col2:
+
+    race2 = st.selectbox("Choose the race to compare", race_options)
+
+
+
+
+
+
+
 
 # Afficher les statistiques des deux courses
 display_race_stats(race1, race2, data)

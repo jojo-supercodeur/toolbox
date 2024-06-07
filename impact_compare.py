@@ -63,7 +63,8 @@ st.write("First draft, soon on Maurten website !")
 
 # Charger les données JSON
 def load_data():
-    with open('race_infos.json', 'r') as file:
+    filepath = os.path.join(base_path, "json_files/race_infos.json")
+    with open(filepath, 'r') as file:
         data = json.load(file)
     return data
 

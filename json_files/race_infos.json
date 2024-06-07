@@ -1,25 +1,25 @@
 {
     "Boston Marathon": {
       "Distance": "42 km",
-      "Elevation": "200 m",
+      "Elevation": 210,
       "Finishers": 300,
-      "Temperature": "15°C",
+      "Temperature": 7,
       "finisher_times": [3600, 3700, 3800],
       "first edition": 1978
     },
     "London Marathon": {
         "Distance": "15 km",
-        "Elevation": "300 m",
+        "Elevation": 350,
         "Finishers": 450,
-        "Temperature": "18°C",
+        "Temperature": 18,
         "finisher_times": [4500, 4600, 4700],
         "first edition": 1976
     },
     "Chicago Marathon": {
       "Distance": "15 km",
-      "Elevation": "300 m",
+      "Elevation": 40,
       "Finishers": 450,
-      "Temperature": "18°C",
+      "Temperature": 23,
       "finisher_times": [4500, 4600, 4700],
       "first edition": 1977
     }

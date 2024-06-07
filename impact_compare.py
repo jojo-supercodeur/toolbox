@@ -59,11 +59,12 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     col1, col2 = st.columns(2)
     with col1:
         st.header(f"{race1}")
-        st.image(logo_path1, width=400)
+        st.markdown(f"<div style='text-align: center;'><img src='{logo_path1}' width='200'></div>", unsafe_allow_html=True)
 
     with col2:
         st.header(f"{race2}")
-        st.image(logo_path2, width=400)
+        st.markdown(f"<div style='text-align: center;'><img src='{logo_path2}' width='200'></div>", unsafe_allow_html=True)
+
 
 
 

@@ -42,7 +42,7 @@ st.markdown(
     .divider {
         height: 100%;
         width: 10px;
-        background-color: #CCCCCC;
+        background-color: #606060;
         margin: 0 auto;
     }
     </style>

@@ -76,7 +76,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
 
     # Définir la taille de police
-    font_size_large = 120  # Vous pouvez ajuster cette valeur selon vos préférences
+    font_size_large = 100  # Vous pouvez ajuster cette valeur selon vos préférences
 
     # Initialiser les variables locales pour chaque statistique
     race1_distance = race1_stats.get('Distance', 'N/A')
@@ -208,7 +208,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         .divider {
             height: 100%;
             width: 1px;
-            background-color: #CCCCCC;
+            background-color: #000000;
             margin: 0 auto;
         }
         </style>

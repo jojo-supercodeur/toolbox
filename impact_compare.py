@@ -6,7 +6,7 @@ import os
 import json
 import gpxpy
 
-from big_fonctions.functions_results import ( 
+from big_fonctions.functions_results import (
     plot_time_distribution,
     plot_time_distribution_sex,
     plot_pourcentage_finish,
@@ -34,6 +34,21 @@ def load_data():
 
 # Charger les données
 data = load_data()
+
+# CSS pour ajouter une barre verticale entre les colonnes
+st.markdown(
+    """
+    <style>
+    .divider {
+        height: 100%;
+        width: 1px;
+        background-color: #CCCCCC;
+        margin: 0 auto;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Interface utilisateur
 st.title("Compare the Majors")
@@ -65,16 +80,6 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         st.header(f"{race2}")
         st.image(logo_path2, width=200, use_column_width='always')
 
-
-
-
-
-
-
-
-    #chargement des statistiques 
-
-
     # Définir la taille de police
     font_size_large = 100  # Vous pouvez ajuster cette valeur selon vos préférences
 
@@ -91,13 +96,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     race2_temperature = race2_stats.get('Temperature', 'N/A')
     race2_first_edition = race2_stats.get('first edition', 'N/A')
 
-
-
-
-    #some work on the data 
-
     # Générer les messages d'élévation pour chaque course
-
     race_elevations = [race1_elevation, race2_elevation]
     messages_elevation = ["", ""]
     for i in range(2):
@@ -110,10 +109,6 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     # Assigner les messages aux variables
     message1_elevation, message2_elevation = messages_elevation
-
-
-
-
 
     # Initialiser les températures des courses et les variables pour les messages
     race_temperatures = [race1_temperature, race2_temperature]
@@ -131,110 +126,50 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     # Assigner les messages aux variables
     message1_temperature, message2_temperature = messages_temperature
 
-         
-
-
-
-
-
-
-
-
     # Affichage des statistiques
 
-
-    #First edition 
+    # First edition 
     st.write("The race was created in : ")
-    col1, col2 = st.columns(2)
-    with col1:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_first_edition}</h1>", unsafe_allow_html=True)
-    with col2:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_first_edition}</h1>", unsafe_allow_html=True)
-
-
-    
-
-
-
-
-    #Number of runner
-    st.write("The number of runnner is :")
-    col1, col2 = st.columns(2)
-    with col1:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
-    with col2:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
-
-
-
-
-
-
-
-    #Elevation of the race
-    st.write("The positive elevation is :")
-    col1, col2 = st.columns(2)
-    with col1:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
-            st.write(message1_elevation)
-    with col2:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
-            st.write(message2_elevation)
-
-
-
-
-    
-    #Temperature
-    st.write("The mean temperature the last 10 years was :")
-    col1, col2 = st.columns(2)
-    with col1:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_temperature}</h1>", unsafe_allow_html=True)
-            st.write(message1_temperature)
-    with col2:
-            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_temperature}</h1>", unsafe_allow_html=True)
-            #st.write(message2_temperature)
-            st.markdown(f"<p style='text-align: center;'>{message2_temperature}</p>", unsafe_allow_html=True)
-
-
-
-
-
-
-    # CSS pour ajouter une barre verticale entre les colonnes
-    st.markdown(
-        """
-        <style>
-        .divider {
-            height: 100%;
-            width: 1px;
-            background-color: #000000;
-            margin: 0 auto;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Elevation of the race
-    st.write("The positive elevation is :")
     col1, col2, col3 = st.columns([1, 0.05, 1])  # La colonne du milieu est plus petite pour la barre
     with col1:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_first_edition}</h1>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_first_edition}</h1>", unsafe_allow_html=True)
+
+    # Number of runners
+    st.write("The number of runners is :")
+    col1, col2, col3 = st.columns([1, 0.05, 1])
+    with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
-        st.markdown(f"<p style='text-align: center;'>{message1_elevation}</p>", unsafe_allow_html=True)
     with col2:
         st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
     with col3:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
+
+    # Elevation of the race
+    st.write("The positive elevation is :")
+    col1, col2, col3 = st.columns([1, 0.05, 1])
+    with col1:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_elevation}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'>{message1_elevation}</p>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_elevation}</h1>", unsafe_allow_html=True)
         st.markdown(f"<p style='text-align: center;'>{message2_elevation}</p>", unsafe_allow_html=True)
 
-
-
-
-
-
-
-
-
+    # Temperature
+    st.write("The mean temperature the last 10 years was :")
+    col1, col2, col3 = st.columns([1, 0.05, 1])
+    with col1:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_temperature}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'>{message1_temperature}</p>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_temperature}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'>{message2_temperature}</p>", unsafe_allow_html=True)
 
 st.write("Soon on Maurten Website - Contact me if you want other analyses")

@@ -78,7 +78,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     logo_path2 = os.path.join(base_path, f"logo_race/{race2}.png")
     html_file_map1 = os.path.join(base_path,f"map_race/map_{race1}.html")
     html_file_map2 = os.path.join(base_path,f"map_race/map_{race2}.html")
-    gpx1 = os.path.join(base_path,f"gpx_race/map_{race2}.gpx")
+    gpx1 = os.path.join(base_path,f"gpx_race/map_{race1}.gpx")
     gpx2 = os.path.join(base_path,f"gpx_race/map_{race2}.gpx")
     results_filepath1 = os.path.join(base_path, "results_race/sorted_Boston_2023.json")
     results_filepath2 = os.path.join(base_path, "results_race/sorted_London_2024.json")
@@ -208,7 +208,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     st.write("The comparison of distribution")
     fig_1 = plot_time_distribution(results_filepath1,results_filepath2)
     st.plotly_chart(fig_1)
-    
+
 
     # Temperature
     st.write("The mean temperature the last 10 years was :")

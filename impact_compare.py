@@ -66,22 +66,6 @@ def load_data():
         data = json.load(file)
     return data
 
-# Afficher les statistiques des courses
-def display_race_stats(race1, race2, data):
-    race1_stats = data[race1]
-    race2_stats = data[race2]
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.header(f"{race1}")
-        for stat, value in race1_stats.items():
-            st.write(f"{stat}: {value}")
-
-    with col2:
-        st.header(f"{race2}")
-        for stat, value in race2_stats.items():
-            st.write(f"{stat}: {value}")
 
 # Charger les données
 data = load_data()
@@ -108,13 +92,53 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
 
 
+    race1_stats = data[race1]
+    race2_stats = data[race2]
+
+
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.header(f"{race1}")
+        for stat, value in race1_stats.items():
+            st.write(f"{stat}: {value}")
+
+    with col2:
+        st.header(f"{race2}")
+        for stat, value in race2_stats.items():
+            st.write(f"{stat}: {value}")
+
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+    st.write("i")
+
+    for stat1, value1 in race1_stats.items():
+        st.write(f"Let's compare {stat1}")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write(f"{value1}km")
+
+        with col2:
+            value2 = race2_stats[f"{stat1}"]
+            st.write(f"{value2}:cm")
 
 
 
 
 
-    # Afficher les statistiques des deux courses
-    display_race_stats(race1, race2, data)
+
+
+
+
+
 
     # Espace pour les graphiques
     #st.header("Comparaison Graphique")

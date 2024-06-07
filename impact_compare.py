@@ -78,8 +78,8 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     logo_path2 = os.path.join(base_path, f"logo_race/{race2}.png")
     html_file_map1 = os.path.join(base_path,f"map_race/map_{race1}.html")
     html_file_map2 = os.path.join(base_path,f"map_race/map_{race2}.html")
-    gpx_path1 = os.path.join(base_path,f"gpx_race/map_{race1}.gpx")
-    gpx_path2 = os.path.join(base_path,f"gpx_race/map_{race2}.gpx")
+    gpx_path1 = os.path.join(base_path,f"gpx_race/{race1}.gpx")
+    gpx_path2 = os.path.join(base_path,f"gpx_race/{race2}.gpx")
     with open(gpx_path1, "r") as gpx_file1:
         gpx1 = gpxpy.parse(gpx_file1)
     with open(gpx_path2, "r") as gpx_file1:

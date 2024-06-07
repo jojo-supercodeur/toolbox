@@ -189,10 +189,12 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     col1, col2 = st.columns(2)
 
-    fig1 = create_3d_plot(gpx1)
-    fig2 = create_3d_plot(gpx2)
-    with col1 : st.plotly_chart(fig1)
-    with col2 : st.plotly_chart(fig2)
+    fig_3D1 = create_3d_plot(gpx1)
+    fig_3D2 = create_3d_plot(gpx2)
+    with col1 : 
+        st.plotly_chart(fig_3D1)
+    with col2 : 
+        st.plotly_chart(fig_3D2)
 
 
 
@@ -210,7 +212,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
 
     st.write("The comparison of distribution")
-    fig_1 = plot_time_distribution(results_filepath1,results_filepath2)
+    fig_1 = plot_time_distribution_compare(results_filepath1,results_filepath2)
     st.plotly_chart(fig_1)
 
 

@@ -6,9 +6,6 @@ import os
 import json
 import gpxpy
 
-
-
-
 from big_fonctions.functions_results import ( 
     plot_time_distribution,
     plot_time_distribution_sex,
@@ -26,38 +23,7 @@ def minutes_to_hhmm(minutes):
     minutes = minutes % 60
     return f"{hours:02d}:{minutes:02d}"
 
-
-
 base_path = os.path.dirname(__file__)  # Obtenir le chemin du répertoire du script actuel
-
-
-
-# Courses prédéfinies avec des fichiers GPX fictifs
-predefined_courses = {
-    "Boston",
-    "London",
-    "Chicago",
-    "Tokyo - not available yet",
-    "Berlin - not available yet",
-    "New-York - not available yet"
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Charger les données JSON
 def load_data():
@@ -66,16 +32,14 @@ def load_data():
         data = json.load(file)
     return data
 
-
 # Charger les données
 data = load_data()
 
 # Interface utilisateur
-st.title("Compare the majors")
-st.write("First draft, soon on Maurten website !")
+st.title("Compare the Majors")
+st.write("First draft, soon on Maurten website!")
 
 race_options = list(data.keys())
-
 
 col1, col2 = st.columns(2)
 
@@ -83,89 +47,34 @@ with col1:
     race1 = st.selectbox("Choose your race", ["Choose your race"] + race_options)
 
 with col2:
-
     race2 = st.selectbox("Choose the race to compare", ["Choose the race to compare"] + race_options)
 
-
 if race1 != "Choose your race" and race2 != "Choose the race to compare":
-
-
-
-
     race1_stats = data[race1]
     race2_stats = data[race2]
 
-
-
+    # Affichage des titres des courses
     col1, col2 = st.columns(2)
-
     with col1:
         st.header(f"{race1}")
-        for stat, value in race1_stats.items():
-            st.write(f"{stat}: {value}")
-
     with col2:
         st.header(f"{race2}")
-        for stat, value in race2_stats.items():
-            st.write(f"{stat}: {value}")
 
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-    st.write("i")
-
+    # Affichage des statistiques
     for stat1, value1 in race1_stats.items():
         st.write(f"Let's compare {stat1}")
         col1, col2 = st.columns(2)
         with col1:
-            st.write(f"{value1}km")
-
+            if isinstance(value1, int):
+                st.markdown(f"<h1 style='text-align: center;'>{value1}</h1>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<h2 style='text-align: center;'>{value1}</h2>", unsafe_allow_html=True)
+                
         with col2:
-            value2 = race2_stats[f"{stat1}"]
-            st.write(f"{value2}:cm")
-
-
-
-
-
-
-
-
-
-
-
-    # Espace pour les graphiques
-    #st.header("Comparaison Graphique")
-    #st.write("Graphique des temps des finishers des deux courses à venir...")
-
-    # Placeholder pour les fonctions de graphique
-    # Exemples de fonctions de graphique que vous pouvez ajouter
-    # def plot_finisher_times(race1_times, race2_times):
-    #     # code pour tracer les temps des finishers
-    #     pass
-
-    # if 'finisher_times' in data[race1] and 'finisher_times' in data[race2]:
-    #     plot_finisher_times(data[race1]['finisher_times'], data[race2]['finisher_times'])
-
-
-
-
-
-
-
-
-
-
-
-
+            value2 = race2_stats[stat1]
+            if isinstance(value2, int):
+                st.markdown(f"<h1 style='text-align: center;'>{value2}</h1>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<h2 style='text-align: center;'>{value2}</h2>", unsafe_allow_html=True)
 
 st.write("Soon on Maurten Website - Contact me if you want other analyses")
-  
-
-

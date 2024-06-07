@@ -4,20 +4,23 @@
       "Elevation": "200 m",
       "Finishers": 300,
       "Temperature": "15°C",
-      "finisher_times": [3600, 3700, 3800]
+      "finisher_times": [3600, 3700, 3800],
+      "first edition": 1978
     },
     "London Marathon": {
         "Distance": "15 km",
         "Elevation": "300 m",
         "Finishers": 450,
         "Temperature": "18°C",
-        "finisher_times": [4500, 4600, 4700]
+        "finisher_times": [4500, 4600, 4700],
+        "first edition": 1976
     },
     "Chicago Marathon": {
       "Distance": "15 km",
       "Elevation": "300 m",
       "Finishers": 450,
       "Temperature": "18°C",
-      "finisher_times": [4500, 4600, 4700]
+      "finisher_times": [4500, 4600, 4700],
+      "first edition": 1977
     }
   }

@@ -59,11 +59,12 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     col1, col2 = st.columns(2)
     with col1:
         st.header(f"{race1}")
-        st.markdown(f"<div style='text-align: center;'><img src='{logo_path1}' width='200'></div>", unsafe_allow_html=True)
+        st.image(logo_path1, width=200, use_column_width='always')
 
     with col2:
         st.header(f"{race2}")
-        st.markdown(f"<div style='text-align: center;'><img src='{logo_path2}' width='200'></div>", unsafe_allow_html=True)
+        st.image(logo_path2, width=200, use_column_width='always')
+
 
 
 
@@ -144,6 +145,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     #First edition 
     st.write("The race was created in : ")
+    col1, col2 = st.columns(2)
     with col1:
             st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_first_edition}</h1>", unsafe_allow_html=True)
     with col2:
@@ -157,6 +159,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     #Number of runner
     st.write("The number of runnner is :")
+    col1, col2 = st.columns(2)
     with col1:
             st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
     with col2:
@@ -170,6 +173,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
     #Elevation of the race
     st.write("The positive elevation is :")
+    col1, col2 = st.columns(2)
     with col1:
             st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
             st.write(message1_elevation)
@@ -183,12 +187,49 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     
     #Temperature
     st.write("The mean temperature the last 10 years was :")
+    col1, col2 = st.columns(2)
     with col1:
             st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_temperature}</h1>", unsafe_allow_html=True)
             st.write(message1_temperature)
     with col2:
             st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_temperature}</h1>", unsafe_allow_html=True)
-            st.write(message2_temperature)
+            #st.write(message2_temperature)
+            st.markdown(f"<p style='text-align: center;'>{message2_temperature}</p>", unsafe_allow_html=True)
+
+
+
+
+
+
+    # CSS pour ajouter une barre verticale entre les colonnes
+    st.markdown(
+        """
+        <style>
+        .divider {
+            height: 100%;
+            width: 1px;
+            background-color: #CCCCCC;
+            margin: 0 auto;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Elevation of the race
+    st.write("The positive elevation is :")
+    col1, col2, col3 = st.columns([1, 0.05, 1])  # La colonne du milieu est plus petite pour la barre
+    with col1:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'>{message1_elevation}</p>", unsafe_allow_html=True)
+    with col2:
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'>{message2_elevation}</p>", unsafe_allow_html=True)
+
+
+
 
 
 

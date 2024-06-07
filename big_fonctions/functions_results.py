@@ -753,7 +753,7 @@ def load_html_map(file_path):
 import json
 import plotly.graph_objects as go
 
-def plot_time_distribution_compare(file_path1, file_path2):
+def plot_time_distribution_compare(file_path1, file_path2, race1, race2):
     # Charger les données JSON des deux fichiers
     with open(file_path1, 'r') as file:
         data1 = json.load(file)
@@ -779,7 +779,7 @@ def plot_time_distribution_compare(file_path1, file_path2):
     fig.add_trace(go.Histogram(
         x=finish_times1,
         xbins=dict(size=1),
-        name='Race 1',
+        name=race1,
         marker_color='blue',
         opacity=0.7
     ))
@@ -787,28 +787,10 @@ def plot_time_distribution_compare(file_path1, file_path2):
     fig.add_trace(go.Histogram(
         x=finish_times2,
         xbins=dict(size=1),
-        name='Race 2',
+        name=race2,
         marker_color='orange',
         opacity=0.7
     ))
-
-    # Définir les barrières mythiques en minutes
-    barriers = [180, 210, 240]  # 3h, 3h30, 4h en minutes
-
-    # Ajouter des lignes verticales pour les barrières
-    shapes = [
-        dict(
-            type="line",
-            x0=barrier,
-            y0=0,
-            x1=barrier,
-            y1=1,
-            xref='x',
-            yref='paper',
-            line=dict(color="red", width=2)
-        ) for barrier in barriers
-    ]
-    fig.update_layout(shapes=shapes)
 
     # Définir les tickvals et ticktext pour l'axe x
     tickvals = list(range(0, int(max(finish_times1 + finish_times2)) + 1, 30))

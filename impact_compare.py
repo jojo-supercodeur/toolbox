@@ -52,6 +52,9 @@ st.markdown(
         background-color: #606060;
         margin: 0 auto;
     }
+    .centered-header {
+        text-align: center;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -59,7 +62,7 @@ st.markdown(
 
 # Interface utilisateur
 st.title("Compare the Majors")
-st.write("First draft, soon on Maurten website!")
+st.markdown("<p class='centered-header'>First draft, soon on Maurten website!</p>", unsafe_allow_html=True)
 
 race_options = list(data.keys())
 
@@ -147,7 +150,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     # Affichage des statistiques
 
     # First edition 
-    st.write("The race was created in : ")
+    st.markdown("<p class='centered-header'>The race was created in :</p>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 0.05, 1])  # La colonne du milieu est plus petite pour la barre
     with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_first_edition}</h1>", unsafe_allow_html=True)
@@ -157,7 +160,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_first_edition}</h1>", unsafe_allow_html=True)
 
     # Number of runners
-    st.write("The number of runners is :")
+    st.markdown("<p class='centered-header'>The number of runners is :</p>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 0.05, 1])
     with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
@@ -166,29 +169,19 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     with col3:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
 
-
-
-
-    #map of the course 
-    st.write("The map of the race :")
-
-
+    # Map of the course 
+    st.markdown("<p class='centered-header'>The map of the race :</p>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     html_content_map1 = load_html_map(html_file_map1)
     html_content_map2 = load_html_map(html_file_map2)
+    with col1:
+        components.html(html_content_map1, height=360)  # Utiliser components.html pour intégrer la carte
+    with col2:
+        components.html(html_content_map2, height=360)  # Utiliser components.html pour intégrer la carte
 
-    with col1 : components.html(html_content_map1, height=360)  # Utiliser components.html pour intégrer la carte
-    with col2 : components.html(html_content_map2, height=360)  # Utiliser components.html pour intégrer la carte
-
-
-
-
-    #elevation 3D of the course 
-    st.write("The 3D elevation map of the race :")
-
-    
+    # Elevation 3D of the course 
+    st.markdown("<p class='centered-header'>The 3D elevation map of the race :</p>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
-
     fig_3D1 = create_3d_plot(gpx1)
     fig_3D2 = create_3d_plot(gpx2)
     with col1:
@@ -196,10 +189,8 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     with col2:
         st.plotly_chart(fig_3D2, use_container_width=True)
 
-
-
     # Elevation of the race
-    st.write("The positive elevation is :")
+    st.markdown("<p class='centered-header'>The positive elevation is :</p>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 0.05, 1])
     with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_elevation}</h1>", unsafe_allow_html=True)
@@ -210,14 +201,12 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_elevation}</h1>", unsafe_allow_html=True)
         st.markdown(f"<p style='text-align: center;'>{message2_elevation}</p>", unsafe_allow_html=True)
 
-
-    st.write("The comparison of distribution")
-    fig_1 = plot_time_distribution_compare(results_filepath1,results_filepath2,race1,race2)
+    st.markdown("<p class='centered-header'>The comparison of distribution</p>", unsafe_allow_html=True)
+    fig_1 = plot_time_distribution_compare(results_filepath1, results_filepath2, race1, race2)
     st.plotly_chart(fig_1)
 
-
     # Temperature
-    st.write("The mean temperature the last 10 years was :")
+    st.markdown("<p class='centered-header'>The mean temperature the last 10 years was :</p>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 0.05, 1])
     with col1:
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_temperature}</h1>", unsafe_allow_html=True)
@@ -228,4 +217,4 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
         st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_temperature}</h1>", unsafe_allow_html=True)
         st.markdown(f"<p style='text-align: center;'>{message2_temperature}</p>", unsafe_allow_html=True)
 
-st.write("Soon on Maurten Website - Contact me if you want other analyses")
+st.markdown("<p class='centered-header'>Soon on Maurten Website - Contact me if you want other analyses</p>", unsafe_allow_html=True)

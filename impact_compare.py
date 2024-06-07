@@ -59,27 +59,140 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
     col1, col2 = st.columns(2)
     with col1:
         st.header(f"{race1}")
-        st.image(logo_path1, width=100)
+        st.image(logo_path1, width=400)
 
     with col2:
         st.header(f"{race2}")
-        st.image(logo_path2, width=100)
+        st.image(logo_path2, width=400)
+
+
+
+
+
+
+    #chargement des statistiques 
+
+
+    # Définir la taille de police
+    font_size_large = 180  # Vous pouvez ajuster cette valeur selon vos préférences
+
+    # Initialiser les variables locales pour chaque statistique
+    race1_distance = race1_stats.get('Distance', 'N/A')
+    race1_elevation = race1_stats.get('Elevation', 'N/A')
+    race1_finishers = race1_stats.get('Finishers', 'N/A')
+    race1_temperature = race1_stats.get('Temperature', 'N/A')
+    race1_first_edition = race1_stats.get('first edition', 'N/A')
+
+    race2_distance = race2_stats.get('Distance', 'N/A')
+    race2_elevation = race2_stats.get('Elevation', 'N/A')
+    race2_finishers = race2_stats.get('Finishers', 'N/A')
+    race2_temperature = race2_stats.get('Temperature', 'N/A')
+    race2_first_edition = race2_stats.get('first edition', 'N/A')
+
+
+
+
+    #some work on the data 
+
+    # Générer les messages d'élévation pour chaque course
+
+    race_elevations = [race1_elevation, race2_elevation]
+    messages_elevation = ["", ""]
+    for i in range(2):
+        if race_elevations[i] < 100:
+            messages_elevation[i] = "This is quite flat"
+        elif race_elevations[i] < 200:
+            messages_elevation[i] = "There is some elevation"
+        else:
+            messages_elevation[i] = "Quite hilly marathon"
+
+    # Assigner les messages aux variables
+    message1_elevation, message2_elevation = messages_elevation
+
+
+
+
+
+    # Initialiser les températures des courses et les variables pour les messages
+    race_temperatures = [race1_temperature, race2_temperature]
+    messages_temperature = ["", ""]
+
+    # Générer les messages de température pour chaque course
+    for i in range(2):
+        if race_temperatures[i] < 10:
+            messages_temperature[i] = "This is cold"
+        elif race_temperatures[i] < 20:
+            messages_temperature[i] = "This is mild"
+        else:
+            messages_temperature[i] = "This is hot"
+
+    # Assigner les messages aux variables
+    message1_temperature, message2_temperature = messages_temperature
+
+         
+
+
+
+
+
+
+
 
     # Affichage des statistiques
-    for stat1, value1 in race1_stats.items():
-        st.write(f"Let's compare {stat1}")
-        col1, col2 = st.columns(2)
-        with col1:
-            if isinstance(value1, int):
-                st.markdown(f"<h1 style='text-align: center; font-size: 80px;'>{value1}</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown(f"<h2 style='text-align: center;'>{value1}</h2>", unsafe_allow_html=True)
-                
-        with col2:
-            value2 = race2_stats[stat1]
-            if isinstance(value2, int):
-                st.markdown(f"<h1 style='text-align: center;'>{value2}</h1>", unsafe_allow_html=True)
-            else:
-                st.markdown(f"<h2 style='text-align: center;'>{value2}</h2>", unsafe_allow_html=True)
+
+
+    #First edition 
+    st.write("The race was created in : ")
+    with col1:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_first_edition}</h1>", unsafe_allow_html=True)
+    with col2:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_first_edition}</h1>", unsafe_allow_html=True)
+
+
+    
+
+
+
+
+    #Number of runner
+    st.write("The number of runnner is :")
+    with col1:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
+    with col2:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
+
+
+
+
+
+
+
+    #Elevation of the race
+    st.write("The positive elevation is :")
+    with col1:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_finishers}</h1>", unsafe_allow_html=True)
+            st.write(message1_elevation)
+    with col2:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_finishers}</h1>", unsafe_allow_html=True)
+            st.write(message2_elevation)
+
+
+
+
+    
+    #Temperature
+    st.write("The mean temperature the last 10 years was :")
+    with col1:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race1_temperature}</h1>", unsafe_allow_html=True)
+            st.write(message1_temperature)
+    with col2:
+            st.markdown(f"<h1 style='text-align: center; font-size: {font_size_large}px;'>{race2_temperature}</h1>", unsafe_allow_html=True)
+            st.write(message2_temperature)
+
+
+
+
+
+
 
 st.write("Soon on Maurten Website - Contact me if you want other analyses")

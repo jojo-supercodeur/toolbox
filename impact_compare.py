@@ -75,7 +75,7 @@ if race1 != "Choose your race" and race2 != "Choose the race to compare":
 
 
     # Définir la taille de police
-    font_size_large = 180  # Vous pouvez ajuster cette valeur selon vos préférences
+    font_size_large = 120  # Vous pouvez ajuster cette valeur selon vos préférences
 
     # Initialiser les variables locales pour chaque statistique
     race1_distance = race1_stats.get('Distance', 'N/A')

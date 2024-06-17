@@ -121,7 +121,7 @@ if selected_course != "Choose your race to analyse !" :
 
     st.write("Finish time percentage")
     fig_2 = plot_pourcentage_finish(filepath, total_minutes)
-    st.plotly_chart(fig_2)
+    st.plotly_chart(fig_2[0])   # car j'ai rajouté des datas en output
 
 
     st.write("Top 10 pacing evolution")

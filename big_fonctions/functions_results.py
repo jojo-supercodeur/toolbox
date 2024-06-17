@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 
 
 
-def plot_time_distribution(file_path):
+def plot_time_distribution(file_path, estimated_finish_time_minutes=None):
     # Charger les données JSON
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -44,6 +44,22 @@ def plot_time_distribution(file_path):
             line=dict(color="red", width=2)
         ) for barrier in barriers
     ]
+
+    # Ajouter une barre verte pour le temps estimé du coureur
+    if estimated_finish_time_minutes is not None:
+        shapes.append(
+            dict(
+                type="line",
+                x0=estimated_finish_time_minutes,
+                y0=0,
+                x1=estimated_finish_time_minutes,
+                y1=1,
+                xref='x',
+                yref='paper',
+                line=dict(color="green", width=2, dash='dash')
+            )
+        )
+
     fig.update_layout(shapes=shapes)
 
     # Définir les tickvals et ticktext pour l'axe x
@@ -284,7 +300,7 @@ def plot_pourcentage_finish(file_path, additional_time=None):
     )
     
     # Afficher le graphique
-    return fig
+    return fig, percentage_at_additional_time
 
 # Utilisation de la fonction
 # fig = plot_pourcentage_finish('path_to_your_file.json', additional_time=200)

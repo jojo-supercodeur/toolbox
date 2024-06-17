@@ -22,5 +22,27 @@
       "Temperature": 23,
       "finisher_times": [4500, 4600, 4700],
       "first edition": 1977
+    },
+    "Berlin Marathon": {
+      "Distance": "15 km",
+      "Elevation": 40,
+      "Finishers": 450,
+      "Temperature": 23,
+      "finisher_times": [4500, 4600, 4700],
+      "first edition": 1977,
+      "last_winner":{
+        "man_winner":"Eliud Kipchoge",
+        "man_time": "02:02:42",
+        "woman_winner":"Tigist Assefa",
+        "woman_time": "02:11:53"
+
+        },
+      "course_record":{
+        "man_winner":"Eliud Kipchoge",
+        "man_time": "02:01:09",
+        "woman_winner":"Tigist Assefa",
+        "woman_time": "02:11:53"
+
+        }
     }
   }

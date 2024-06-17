@@ -69,7 +69,7 @@ def parse_gpx(gpx):
 
     return pd.DataFrame(smoothed_data), min_elev
 
-def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_path=1):
+def create_3d_plot(gpx_file_path,legend_bar = False, rotation_speed=10, axis='z', angle_rot=15,img_path=1):
     df, min_elev = parse_gpx(gpx_file_path)
     fig = go.Figure()
 
@@ -91,7 +91,7 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_
         line=dict(
             color=df['elevation'],
             colorscale='Viridis',
-            width=2
+            width=2,
         ),
         name='Track',
         showlegend= False,
@@ -108,7 +108,8 @@ def create_3d_plot(gpx_file_path, rotation_speed=10, axis='z', angle_rot=15,img_
         intensity=df['gradient'].tolist() + df['gradient'].tolist(),
         colorscale=custom_colorscale,
         opacity=1,
-        name='Walls'
+        name='Walls',
+        showscale=legend_bar
     ))
 
      # Add a grid plane

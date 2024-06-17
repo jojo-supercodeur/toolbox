@@ -988,7 +988,7 @@ def create_gauge(race_start_date, race_hour_date, gpx_file, jauge_type):
         unit = "%"
         data_of_each_type = weather_data['rain_probabilities']
         value = np.interp(race_start_seconds, timestamps_seconds, data_of_each_type)
-        bin_value = np.digitize(value, bins=np.linspace(bounds[0], bounds[1], 5)) - 1
+        bin_value = np.digitize(value-1, bins=np.linspace(bounds[0], bounds[1], 5)) - 1
         message = ["No risk", "Should be okay","Take care", "Take a jacket"][bin_value]
         coefficient = 1
 

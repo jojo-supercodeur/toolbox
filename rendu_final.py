@@ -6,12 +6,28 @@ import base64
 from io import BytesIO
 import json
 import plotly.graph_objects as go
+import streamlit.components.v1 as components  # Importer le module components
+import streamlit as st
+import folium
+from streamlit_folium import st_folium
+
+import streamlit as st
+import folium
+from folium.plugins import MarkerCluster
+from streamlit.components.v1 import html
+
 
 def image_to_base64(image):
     buffered = BytesIO()
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
     return img_str
+
+# Fonction pour charger et afficher le fichier HTML de la carte
+def load_html_map(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+    return html_content
 
 # Importer les fonctions nécessaires
 from troisD_graphic import create_3d_plot
@@ -23,7 +39,8 @@ from functions_race import (
     plot_weather_temp_wind,
     plot_weather_rain,
     create_wind_rose,
-    create_gauge
+    create_gauge,
+    generate_map_from_gpx
 )
 from big_fonctions.functions_results import ( 
     plot_time_distribution,
@@ -122,6 +139,33 @@ if submit_button:
     photo_winner_man_base64 = image_to_base64(photo_winner_man)
     photo_winner_woman_base64 = image_to_base64(photo_winner_woman)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     # Mise en page principale
     st.header("Race Recap")
     st.markdown("<hr style='border:2px solid white'>", unsafe_allow_html=True)
@@ -145,6 +189,39 @@ if submit_button:
 
     with col4:
         st.image(provided_image, use_column_width=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     st.header("Course")
     st.markdown("<hr style='border:2px solid white'>", unsafe_allow_html=True)
@@ -170,13 +247,86 @@ if submit_button:
     )
 
     st.write("")
-    st.write(f"**Elevation Gain:** {round(total_elevation_gain)}m")
-    st.write(f"**Elevation Loss:** {round(total_elevation_loss)}m")
-    st.write(f"**Minimum Elevation:** {round(min_altitude)}m")
-    st.write(f"**Maximum Elevation:** {round(max_altitude)}m")
-    st.write("**Course Type:** Fast")
-    st.write("**Performance Potential:** High")
-    st.write("**Course Impact on Time:** WIP")
+    col1, col2 = st.columns([1, 1])
+    with col1 :
+        st.write(f"**Elevation Gain:** {round(total_elevation_gain)}m")
+        st.write(f"**Elevation Loss:** {round(total_elevation_loss)}m")
+        st.write(f"**Minimum Elevation:** {round(min_altitude)}m")
+        st.write(f"**Maximum Elevation:** {round(max_altitude)}m")
+
+    with col2: 
+        st.write("**Course Type:** Fast")
+        st.write("**Performance Potential:** High")
+        st.write("**Course Impact on Time:** WIP")
+
+
+    
+
+
+    fig = generate_elevation_and_gradient_plot(provided_gpx, threshold)
+    fig.update_layout(height=500, width=700)  # Définir explicitement la taille du graphique
+    st.plotly_chart(fig, use_container_width=True)
+
+    generate_map_from_gpx(gpx_path,race)
+    html_file_map = os.path.join(base_path,f"html_race/{race}.html")
+    html_content_map = load_html_map(html_file_map)
+    components.html(html_content_map, height=360)  # Utiliser components.html pour intégrer la carte
+    #st.folium(html_file_map, width=700, height=500)
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     st.header("Weather")
     st.markdown("<hr style='border:2px solid white'>", unsafe_allow_html=True)
@@ -245,6 +395,49 @@ if submit_button:
         st.markdown(f"<h3 style='text-align: center; font-weight: bold; margin-top: -100px;'>{result[1]}</h3>", unsafe_allow_html=True)
         st.markdown(f"<h3 style='text-align: center; font-weight: bold; margin-top: -80px;'>{result[2]}</h3>", unsafe_allow_html=True)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     st.header("Past results - 2023")
     st.markdown("<hr style='border:2px solid white'>", unsafe_allow_html=True)
 
@@ -288,6 +481,64 @@ if submit_button:
     fig_2.update_layout(height=500, width=700)  # Définir explicitement la taille du graphique
     st.plotly_chart(fig_2, use_container_width=True)
     st.write("In green your estimated time")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     st.header("Nutritional Advices")
     st.markdown("<hr style='border:2px solid white'>", unsafe_allow_html=True)

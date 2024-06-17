@@ -29,6 +29,10 @@ import gpxpy
 import requests
 import json
 from datetime import datetime, timedelta
+import folium
+import streamlit as st
+import folium
+from streamlit.components.v1 import html
 
 
 
@@ -185,6 +189,45 @@ def create_wind_rose(gpx_file, start_day, start_time):
     return fig
     #fig.show()
 
+
+
+
+
+
+
+
+
+
+
+def generate_map_from_gpx(gpx_file, race_name, zoom_start_map=12):
+    # Charger le fichier GPX
+    with open(gpx_file, "r") as gpxfile:
+        gpx = gpxpy.parse(gpxfile)
+
+
+    # Extraire les coordonnées du fichier GPX
+    points = []
+    for track in gpx.tracks:
+        for segment in track.segments:
+            for point in segment.points:
+                points.append(tuple([point.latitude, point.longitude]))
+
+    # Calculer les coordonnées centrales
+    center_lat = sum(p[0] for p in points) / len(points)
+    center_lon = sum(p[1] for p in points) / len(points)
+
+    # Créer la carte avec Folium centrée sur la trace
+    map = folium.Map(
+        zoom_start=zoom_start_map, location=(center_lat, center_lon)
+    )  # zoom start 9 est un peu trop large pour l'UTMB, 8 est pire
+
+    # Ajouter la trace du GPX
+    folium.PolyLine(points, color="red", weight=2.5, opacity=1).add_to(map)
+
+    # retournet la carte en HTML
+    map_html = map._repr_html_()
+    map.save(f"html_race/{race_name}.html")
+    return map_html
 
 
 

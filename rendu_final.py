@@ -7,13 +7,8 @@ from io import BytesIO
 import json
 import plotly.graph_objects as go
 import streamlit.components.v1 as components  # Importer le module components
-import streamlit as st
-import folium
-from streamlit_folium import st_folium
 
-import streamlit as st
-import folium
-from folium.plugins import MarkerCluster
+
 from streamlit.components.v1 import html
 
 

@@ -163,8 +163,8 @@ def calculate_wind_impact_coefficients(segment_azimuths, wind_speed=1.0):
 
 
 # Step 1: Calculate coefficients for each wind angle
-marathon_name = 'Marathon de Valence'
-gpx_file_path = f'PUBLIC/source/gpx_traces/{marathon_name}.gpx'
+marathon_name = 'Olympics Marathon'
+gpx_file_path = f'../gpx_race/{marathon_name}.gpx'
 
 points = read_gpx(gpx_file_path)
 segment_azimuths = calculate_segment_azimuths(points)

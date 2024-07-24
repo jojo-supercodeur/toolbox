@@ -1,7 +1,8 @@
 #This is the file calculating of the impact of external parameter on the performance 
+#This file is property of Maurten AB
+#It was coded by Joseph Mestrallet and its first version was delivered on 24 July.
+#It's dedicated to be used in the fuel calculator project
 
-#V1 will be super simple : 1 coefficient for each GPX
-#Wind GPX 
 
 
 import pandas as pd

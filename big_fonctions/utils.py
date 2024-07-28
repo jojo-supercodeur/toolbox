@@ -351,7 +351,7 @@ def temperature_formula_general_public_wearing_black(temperature, runner_time):
     return temperature_formula_general_public(temperature + rise_temperature(runner_time))
 
 
-def rise_temperature(runner_time, irradiance=1000, surface_area=0.3, specific_heat_air=1005, mass_air=0.025):
+def rise_temperature(runner_time, irradiance=1000, surface_area=0.3, specific_heat_air=1005, mass_air=400):
     """
     We can include irradiance in the json info_impact_majors or in an api request
     Does the wind change something ?
@@ -423,5 +423,7 @@ print(calculate_global_wind_impact_V0_1('Boston Marathon',340,15))
 print(calculate_global_wind_impact_V1('Boston Marathon',80,15))
 print(calculate_global_wind_impact_V1('Boston Marathon',270,15))
 print(calculate_global_wind_impact_V1('Boston Marathon',350,15))
-plot_gamma_distribution('Boston Marathon')
-plot_cd_vs_finish_time('Boston Marathon')    #just nice to see 
+#plot_gamma_distribution('Boston Marathon')
+#plot_cd_vs_finish_time('Boston Marathon')    #just nice to see 
+
+print(rise_temperature(180))
